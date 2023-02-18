@@ -1,0 +1,28 @@
+.ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+
+    font-size: 30px;
+    color: white;
+
+    grid-area: navbar;
+    background-color: rgba(29, 30, 33, 0.88);
+}
+
+.li{
+    margin: 20px 0;
+}
+
+.li a{
+    color: white;
+}
+
+.li a:active {
+    color: #fdc906;
+}
+
+.li a:hover {
+    color: red;
+}

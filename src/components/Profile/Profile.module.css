@@ -1,0 +1,11 @@
+.profile{
+    grid-area: main;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.mainImage{
+    width: 100%;
+    height: 100%;
+}

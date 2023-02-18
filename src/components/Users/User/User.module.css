@@ -1,0 +1,28 @@
+.user {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    border: 1px solid green;
+    margin: 20px;
+
+    font-size: 20px;
+}
+
+.userLogo{
+    display: flex;
+    flex-direction: column;
+}
+
+.followButton{
+
+}
+
+.unfollowButton{
+    background-color: green;
+}
+
+.photo{
+    width: 100px;
+    padding: 5px;
+}

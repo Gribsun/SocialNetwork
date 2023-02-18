@@ -1,0 +1,4 @@
+export const ProfileTypes = {
+    SET_USER_PROFILE: 'SET_USER_PROFILE',
+    TOGGLE_IS_FETCHING: 'TOGGLE_IS_FETCHING',
+}
