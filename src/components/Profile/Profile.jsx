@@ -1,6 +1,7 @@
 // core
-import React, {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {Navigate, useParams} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 // components
 import {PostsContainer} from './Posts/PostsContainer';
@@ -13,14 +14,27 @@ import mainPhoto from '../../public/big-serious-sam-history.jpg';
 // styles
 import style from './Profile.module.css';
 
-export const Profile = ({profile, setProfile, setIsFetching}) => {
+export const Profile = ({profile, isAuth, getUserProfile, getUserStatus, checkLogin, updateUserStatus, setIsFetching}) => {
     const userId = useParams();
-    let {isFetching} = profile;
-    useEffect(() => {
-        setIsFetching(isFetching = true);
-        setProfile(userId);
-    }, []);
+    const myUserId = useSelector(store => store.auth.userId);
+    const [isMyProfile, setIsMyProfile] = useState(false);
+    const {isFetching} = profile;
 
+    useEffect(() => {
+        checkLogin();
+        if (!Object.keys(userId).length && myUserId) {
+            setIsFetching(true);
+            getUserStatus({id: myUserId});
+            getUserProfile({id: myUserId});
+            setIsMyProfile(true);
+        } else {
+            setIsFetching(true);
+            getUserStatus(userId);
+            getUserProfile(userId);
+            setIsMyProfile(myUserId === +userId.id);
+        }
+    }, [userId, myUserId]);
+    if (!isAuth) return <Navigate to={'/login'}/>
     return (
         isFetching
             ? <Preloader />
@@ -30,8 +44,8 @@ export const Profile = ({profile, setProfile, setIsFetching}) => {
                     alt='#'
                     className={style.mainImage}
                 />
-                <ProfileInfo profile={profile}/>
-                <PostsContainer />
+                <ProfileInfo profile={profile} isMyProfile={isMyProfile} updateUserStatus={updateUserStatus}/>
+                <PostsContainer isMyProfile={isMyProfile}/>
             </div>
     )
 }

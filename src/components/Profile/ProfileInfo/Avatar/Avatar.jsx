@@ -7,7 +7,8 @@ import avatar from "../../../../public/serious-sam.jpg";
 // styles
 import style from './Avatar.module.css';
 
-export const Avatar = ({large}) => {
+export const Avatar = ({photos}) => {
+    const {small, large} = photos;
     return (
         <img
             src={large ? large : avatar}

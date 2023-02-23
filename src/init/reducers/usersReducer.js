@@ -1,4 +1,5 @@
 import {UsersTypes} from "../types/usersTypes";
+import {GeneralTypes} from "../types/generalTypes";
 
 const initialState = {
     users: [],
@@ -6,6 +7,10 @@ const initialState = {
     totalCount: 0,
     currentPage: 1,
     isFetching: false,
+    followingInProgress: false,
+    filter: {
+        term: '',
+    },
 }
 
 export const usersReducer = (
@@ -21,9 +26,15 @@ export const usersReducer = (
                 totalCount: action.payload.totalCount,
                 isFetching: false,
             }
+        case UsersTypes.SET_FILTER:
+            return {
+                ...state,
+                filter: {term: action.payload},
+            }
         case UsersTypes.FOLLOW:
             return {
                 ...state,
+                followingInProgress: false,
                 users: state.users.map(user => {
                     if (user.id === action.payload) {
                         return {
@@ -36,6 +47,7 @@ export const usersReducer = (
         case UsersTypes.UNFOLLOW:
             return {
                 ...state,
+                followingInProgress: false,
                 users: state.users.map(user => {
                     if (user.id === action.payload) {
                         return {
@@ -45,10 +57,15 @@ export const usersReducer = (
                     } else return user;
                 })
             };
-        case UsersTypes.TOGGLE_IS_FETCHING:
+        case GeneralTypes.TOGGLE_IS_FETCHING:
             return {
                 ...state,
                 isFetching: action.payload,
+            }
+        case GeneralTypes.TOGGLE_IS_FOLLOWING_PROGRESS:
+            return {
+                ...state,
+                followingInProgress: action.payload,
             }
         default:
             return state;

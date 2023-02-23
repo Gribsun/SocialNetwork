@@ -1,24 +1,11 @@
-import axios from "axios";
-import {PostsTypes} from "../types/postsTypes";
-
-export const getPosts = () => async (dispatch) => {
-    try {
-        dispatch({
-            type: PostsTypes.GET_POSTS,
-            payload: null,
-        });
-    } catch (err) {
-        console.log(err);
-    }
-};
-
+import {PostsTypes} from '../types/postsTypes';
 
 export const addPost = (text) => async (dispatch) => {
     try {
         const response = {
                 id: 8127462375468256 + Math.random()*100,
                 text,
-                title: 'New!!!',
+                title: 'Title ',
                 likesCount: 777,
             };
         dispatch({

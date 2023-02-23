@@ -3,5 +3,5 @@ export const UsersTypes = {
     UNFOLLOW: 'UNFOLLOW',
     SET_USERS: 'SET_USERS',
     GET_USERS: 'GET_USERS',
-    TOGGLE_IS_FETCHING: 'TOGGLE_IS_FETCHING',
+    SET_FILTER: 'SET_FILTER',
 }

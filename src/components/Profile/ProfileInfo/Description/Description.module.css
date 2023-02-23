@@ -16,3 +16,16 @@
 .li:first-child{
     margin: 0 0 30px 0;
 }
+
+.inputLi{
+    border: 1px solid #2e3136;
+    width: 300px;
+    height: 30px;
+}
+
+.iconSettings {
+    width: 20px;
+    height: 20px;
+
+    margin: 5px;
+}

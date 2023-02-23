@@ -1,41 +1,38 @@
 // core
-import React from 'react';
 import {connect} from 'react-redux';
 import {
-    setUsers,
+    getUsers,
     followUser,
-    unfollowUser,
-    setIsFetching
+    unfollowUser, setFilter,
 } from '../../init/actions/usersAction';
+import {compose} from 'redux';
+import {setIsFetching, setIsFollowingProgress} from '../../init/actions/generalAction';
 
 // components
 import {Users} from './Users';
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 const mapStateToProps = (state) => {
-    const totalCount = state.userCollection.totalCount;
-    const pages = [];
-    const pagesSideBySide = state.userCollection.currentPage + 2;
-    for (let i = pagesSideBySide - 5; i <= pagesSideBySide; i++) {
-        if (i > 0 && i < totalCount) {
-            pages.push(i);
-        }
-    }
-    pages.push(totalCount);
     return {
+        isAuth: state.auth.isAuth,
         users: state.userCollection.users,
+        filter: state.userCollection.filter,
         pageSize: state.userCollection.pageSize,
         currentPage: state.userCollection.currentPage,
-        pagesCount: pages,
+        totalCount: state.userCollection.totalCount,
         isFetching: state.userCollection.isFetching,
+        followingInProgress: state.userCollection.followingInProgress,
     }
 }
 
-export const UsersContainer = connect(
-    mapStateToProps,
-    {
-        setUsers,
+export default compose(
+    connect(mapStateToProps, {
+        getUsers,
+        setFilter,
         followUser,
         unfollowUser,
         setIsFetching,
-    }
+        setIsFollowingProgress
+    }),
+    WithAuthRedirect,
 )(Users);

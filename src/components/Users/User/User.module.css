@@ -1,10 +1,13 @@
-.user {
+.wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
-    border: 1px solid green;
-    margin: 20px;
+
+    height: 220px;
+
+    border-bottom: 1px solid #1d1e21;
+    margin: 10px 20px;
 
     font-size: 20px;
 }
@@ -12,17 +15,58 @@
 .userLogo{
     display: flex;
     flex-direction: column;
-}
+    align-items: center;
+    justify-content: center;
 
-.followButton{
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #2e3136;
 
-}
-
-.unfollowButton{
-    background-color: green;
+    margin: 10px;
+    padding: 5px;
 }
 
 .photo{
-    width: 100px;
+    width: 180px;
+    text-align: center;
+}
+
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.userName{
+    font-size: 30px;
+    margin: 10px;
+}
+
+.wrapperForButton{
+    width: 120px;
+
+    margin: 10px;
     padding: 5px;
+
+    border: 1px solid #2e3136;
+    text-align: center;
+}
+
+.followButton{
+    font-size: 24px;
+    background-color: #fbfbfb;
+
+    padding: 0;
+    margin: 0;
+}
+
+.unfollowButton{
+    font-size: 20px;
+    background-color: #fbfbfb;
+
+    padding: 0;
+    margin: 0;
 }

@@ -1,8 +1,10 @@
 import {ProfileTypes} from '../types/profileTypes';
+import {GeneralTypes} from "../types/generalTypes";
 
 const initialState = {
     profileData: null,
     isFetching: false,
+    status: '',
 }
 
 export const profileReducer = (
@@ -17,7 +19,19 @@ export const profileReducer = (
                 isFetching: false,
             }
         }
-        case ProfileTypes.TOGGLE_IS_FETCHING:
+        case ProfileTypes.GET_USER_STATUS: {
+            return {
+                ...state,
+                status: action.payload,
+            }
+        }
+        case ProfileTypes.UPDATE_USER_STATUS: {
+            return {
+                ...state,
+                status: action.payload,
+            }
+        }
+        case GeneralTypes.TOGGLE_IS_FETCHING:
             return {
                 ...state,
                 isFetching: action.payload,

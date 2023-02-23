@@ -1,0 +1,61 @@
+.wrapper{
+    margin: 24px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.inputForm{
+    width: 260px;
+    height: 40px;
+
+    margin: 14px;
+    padding: 8px;
+
+    border: 1px solid #1d1e21;
+}
+
+.inputFormError{
+    width: 260px;
+    height: 40px;
+
+    margin: 14px;
+    padding: 8px;
+
+    border: 1px solid #fd1c1d;
+}
+
+.textError{
+    color: #fd1c1d;
+    font-weight: bold;
+}
+
+.rememberMe{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin: 14px;
+}
+
+.inputCheckbox{
+    margin-left: 10px;
+
+    width: 25px;
+    height: 25px;
+}
+
+.buttonSubmit{
+    width: 160px;
+    height: 60px;
+
+    border: 1px solid #1d1e21;
+
+    font-size: 24px;
+}

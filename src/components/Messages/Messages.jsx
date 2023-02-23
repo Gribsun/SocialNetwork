@@ -1,29 +1,20 @@
 // core
-import React, {useRef, useState} from "react";
+import React from 'react';
 
 // components
-import {Dialog} from "./Dialog/Dialog";
-import {Message} from "./Message/Message";
+import {Dialog} from './Dialog/Dialog';
+import {Message} from './Message/Message';
+import {AddMessageForm} from './AddMessageForm/AddMessageForm'
 
 // other
-import {userDialogs} from "../../data/userDialogs";
+import {userDialogs} from '../../data/userDialogs';
 
 // styles
 import style from './Messages.module.css';
+import {Navigate} from "react-router-dom";
 
-export const Messages = ({messages, addMessageHandle}) => {
-    const [text, setText] = useState('');
-    const ref = useRef();
-
-    const changeHandle = (event) => {
-        setText(event.target.value);
-    }
-    const updateMessageHandle = (text) => {
-        addMessageHandle(text);
-        setText('');
-        ref.current.value = '';
-    }
-
+export const Messages = ({isAuth, messages, addMessage}) => {
+    if (!isAuth) return <Navigate to={'/login'}/>
     return (
         <div className={style.wrapper}>
             <div className={style.dialogsItems}>
@@ -31,7 +22,7 @@ export const Messages = ({messages, addMessageHandle}) => {
                     <Dialog
                         key={id}
                         id={id}
-                        name={name} />
+                        name={name}/>
                 )}
             </div>
             <div className={style.messageWindow}>
@@ -40,22 +31,10 @@ export const Messages = ({messages, addMessageHandle}) => {
                         <Message
                             key={id}
                             id={id}
-                            message={message} />
+                            message={message}/>
                     )}
                 </div>
-                <div className={style.messageInputWindow}>
-                    <textarea
-                        ref={ref}
-                        onChange={changeHandle}
-                        className={style.textarea}
-                    />
-                    <button
-                        onClick={() => updateMessageHandle(text)}
-                        className={style.button}
-                    >
-                        send
-                    </button>
-                </div>
+                <AddMessageForm addMessage={addMessage}/>
             </div>
         </div>
     )

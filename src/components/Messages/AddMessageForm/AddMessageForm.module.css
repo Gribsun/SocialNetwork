@@ -1,0 +1,38 @@
+.form{
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.inputForm{
+    width: 260px;
+    height: 40px;
+
+    margin: 5px;
+
+    border: 1px solid #1d1e21;
+}
+
+.buttonSubmit{
+    width: 160px;
+    height: 60px;
+
+    border: 1px solid #1d1e21;
+
+    font-size: 24px;
+}
+
+.textarea{
+    width: 80%;
+    height: 150px;
+    border: 1px solid black;
+}
+
+.messageInputWindow{
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}

@@ -1,9 +1,9 @@
-import axios from "axios";
 import {UsersTypes} from "../types/usersTypes";
+import {usersAPI} from '../../api/api';
 
-export const setUsers = (pageSize, page) => async (dispatch) => {
+export const getUsers = (pageSize = 5, page = 1, term = '') => async (dispatch) => {
     try {
-        const response = await axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${page}`);
+        const response = await usersAPI.users(pageSize, page, term);
         if (response.data) {
             const {items, totalCount} = response.data;
             dispatch({
@@ -20,12 +20,27 @@ export const setUsers = (pageSize, page) => async (dispatch) => {
     }
 };
 
-export const followUser = (userId) => async (dispatch) => {
+export const setFilter = (term) => async (dispatch) => {
     try {
         dispatch({
-            type: UsersTypes.FOLLOW,
-            payload: userId,
+            type: UsersTypes.SET_FILTER,
+            payload: term,
         });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+
+export const followUser = (userId) => async (dispatch) => {
+    try {
+        const response = await usersAPI.follow(userId);
+        if (response.data.resultCode === 0) {
+            dispatch({
+                type: UsersTypes.FOLLOW,
+                payload: userId,
+            });
+        }
     } catch (err) {
         console.log(err);
     }
@@ -33,21 +48,13 @@ export const followUser = (userId) => async (dispatch) => {
 
 export const unfollowUser = (userId) => async (dispatch) => {
     try {
-        dispatch({
-            type: UsersTypes.UNFOLLOW,
-            payload: userId,
-        });
-    } catch (err) {
-        console.log(err);
-    }
-};
-
-export const setIsFetching = (isFetching) => async (dispatch) => {
-    try {
-        dispatch({
-            type: UsersTypes.TOGGLE_IS_FETCHING,
-            payload: isFetching,
-        });
+        const response = await usersAPI.unfollow(userId);
+        if (response.data.resultCode === 0) {
+            dispatch({
+                type: UsersTypes.UNFOLLOW,
+                payload: userId,
+            });
+        }
     } catch (err) {
         console.log(err);
     }

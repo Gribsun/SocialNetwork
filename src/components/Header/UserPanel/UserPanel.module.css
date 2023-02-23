@@ -1,0 +1,25 @@
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    padding: 5px 20px;
+}
+
+.headerImage{
+    width: 80px;
+    padding: 10px;
+}
+
+.login{
+    font-size: 30px;
+    color: white;
+}
+
+.logout{
+    font-size: 18px;
+    color: white;
+
+    background-color: #1d1e21;
+}

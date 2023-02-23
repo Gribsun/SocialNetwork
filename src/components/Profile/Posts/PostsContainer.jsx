@@ -1,10 +1,10 @@
 // core
 import React from 'react';
-import {connect} from "react-redux";
-import {addPost} from "../../../init/actions/postsAction";
+import {connect} from 'react-redux';
+import {addPost} from '../../../init/actions/postsAction';
 
 // components
-import {Posts} from "./Posts";
+import {Posts} from './Posts';
 
 const mapStateToProps = (state) => {
     return {

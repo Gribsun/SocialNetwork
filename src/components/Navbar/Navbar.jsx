@@ -1,6 +1,6 @@
 // core
-import React from "react";
-import {Link} from "react-router-dom";
+import React from 'react';
+import {Link} from 'react-router-dom';
 
 // styles
 import style from './Navbar.module.css';
@@ -9,7 +9,7 @@ export const Navbar = () => {
     return (
         <ul className={style.ul}>
             <li className={style.li}>
-                <Link to='/profile'>Profile</Link>
+                <Link to='/profile'>My profile</Link>
             </li>
             <li className={style.li}>
                 <Link to='/messages'>Messages</Link>
@@ -25,9 +25,6 @@ export const Navbar = () => {
             </li>
             <li className={style.li}>
                 <Link to='/settings'>Settings</Link>
-            </li>
-            <li className={style.li}>
-                <Link to='/usersClass'>CLASS</Link>
             </li>
         </ul>
     )

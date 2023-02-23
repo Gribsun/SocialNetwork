@@ -1,12 +1,8 @@
 // core
 import React from "react";
-import axios from "axios";
-
-// components
-import {User} from "../Users/User/User";
 
 // other
-import {getUsers, setUsers, followUser, unfollowUser} from "../../init/actions/usersAction";
+import {getUsers} from "../../init/actions/usersAction";
 
 // styles
 import style from "../Users/Users.module.css";
@@ -18,7 +14,7 @@ class Users extends React.Component {
 
     componentDidMount() {
         const setUsersHandle = () => {
-            setUsers();
+            getUsers();
         }
         setUsersHandle();
     }

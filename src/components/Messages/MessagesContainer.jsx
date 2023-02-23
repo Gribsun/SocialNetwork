@@ -1,26 +1,20 @@
 // core
-import React from "react";
-import {connect} from "react-redux";
-import {addMessage} from "../../init/actions/messagesAction";
+import React from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {addMessage} from '../../init/actions/messagesAction';
 
 // components
-import {Messages} from "./Messages";
+import {Messages} from './Messages';
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 const mapStateToProps = (state) => {
     return {
+        isAuth: state.auth.isAuth,
         messages: state.messages,
     }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addMessageHandle: (text) => {
-            dispatch(addMessage(text));
-        }
-    }
-}
-
-export const MessagesContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
+};
+export default compose(
+    connect(mapStateToProps, {addMessage}),
+    WithAuthRedirect,
 )(Messages);

@@ -1,26 +1,52 @@
 import {ProfileTypes} from '../types/profileTypes';
-import axios from "axios";
+import {profileAPI} from '../../api/api';
 
-export const setProfile = ({id}) => async (dispatch) => {
+export const getUserProfile = ({id}) => async (dispatch) => {
     try {
-        const response = await axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`)
-        if (response.data) {
-            dispatch({
-                type: ProfileTypes.SET_USER_PROFILE,
-                payload: response.data,
-            })
+        if (id) {
+            const response = await profileAPI.profile(id);
+            if (response.data) {
+                dispatch({
+                    type: ProfileTypes.SET_USER_PROFILE,
+                    payload: response.data,
+                })
+            }
         }
     } catch (err) {
         console.log(err);
     }
 };
 
-export const setIsFetching = (isFetching) => async (dispatch) => {
+export const getUserStatus = ({id}) => async (dispatch) => {
     try {
-        dispatch({
-            type: ProfileTypes.TOGGLE_IS_FETCHING,
-            payload: isFetching,
-        });
+        if (id) {
+            const response = await profileAPI.status(id);
+            if (response.data) {
+                dispatch({
+                    type: ProfileTypes.GET_USER_STATUS,
+                    payload: response.data,
+                })
+            } else {
+                dispatch({
+                    type: ProfileTypes.GET_USER_STATUS,
+                    payload: '',
+                })
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const updateUserStatus = (status) => async (dispatch) => {
+    try {
+        const response = await profileAPI.updateStatus(status);
+        if (response) {
+            dispatch({
+                type: ProfileTypes.UPDATE_USER_STATUS,
+                payload: status,
+            })
+        }
     } catch (err) {
         console.log(err);
     }

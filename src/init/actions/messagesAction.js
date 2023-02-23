@@ -1,16 +1,4 @@
-import axios from "axios";
 import {MessagesTypes} from "../types/messagesTypes";
-
-export const getMessages = () => async (dispatch) => {
-    try {
-        dispatch({
-            type: MessagesTypes.GET_MESSAGES,
-            payload: null,
-        });
-    } catch (err) {
-        console.log(err);
-    }
-};
 
 export const addMessage = (text) => async (dispatch) => {
     try {

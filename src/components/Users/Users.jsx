@@ -4,47 +4,58 @@ import React, {useEffect} from 'react';
 // components
 import {User} from './User/User';
 import {Preloader} from "../common/Preloader/Preloader";
+import {UsersSearchForm} from "./UsersSearchForm/UsersSearchForm";
 
 // styles
 import style from './Users.module.css';
+import {Navigate} from "react-router-dom";
 
 export const Users = (
     {
-        users,
-        pageSize,
-        currentPage,
-        pagesCount,
-        isFetching,
-        setUsers,
-        followUser,
-        unfollowUser,
-        setIsFetching,
+        users, pageSize, currentPage, totalCount, filter, isAuth,
+        setFilter, isFetching, followingInProgress,
+        getUsers, followUser, unfollowUser,
+        setIsFetching, setIsFollowingProgress,
     }
 ) => {
     useEffect(() => {
-        setIsFetching(isFetching = true);
-        setUsers(pageSize, 1);
+        setIsFetching(true);
+        getUsers(pageSize, 1);
     }, []);
-    const changePage = (page) => {
-        if (page === currentPage) return null;
-        setIsFetching(isFetching = true);
-        setUsers(pageSize, page);
+
+    const changePage = (pageNumber) => {
+        setIsFetching(true);
+        getUsers(pageSize, pageNumber, filter.term);
     }
+
+    const onFilterChanged = (pageNumber, filter) => {
+        setFilter(filter.term);
+        getUsers(pageSize, 1, filter.term);
+    }
+
+    if (!isAuth) return <Navigate to={'/login'}/>
+
     return (
         <>
             {isFetching
                 ? <Preloader />
                 : <div className={style.wrapper}>
+                    <UsersSearchForm filter={filter} onFilterChanged={onFilterChanged}/>
                     <div className={style.usersPage}>
-                        {pagesCount ? pagesCount.map(page =>
-                            <button
-                                key={page}
-                                onClick={(event) => changePage(page)}
-                                className={currentPage === page ? style.activePage : style.userPage}
-                            >
-                                {page}
-                            </button>
-                        ) : null}
+                        <button
+                            disabled={currentPage === 1}
+                            onClick={(event) => changePage(currentPage-1)}
+                            className={style.userPage}
+                        >
+                            previous
+                        </button>
+                        <button
+                            disabled={currentPage === totalCount}
+                            onClick={(event) => changePage(currentPage+1)}
+                            className={style.userPage}
+                        >
+                            next
+                        </button>
                     </div>
                     <div className={style.users}>
                         {users.length ? users.map(user =>
@@ -56,8 +67,10 @@ export const Users = (
                                 followed={user.followed}
                                 status={user.status}
                                 uniqueUrlName={user.uniqueUrlName}
+                                followingInProgress={followingInProgress}
                                 followUser={followUser}
                                 unfollowUser={unfollowUser}
+                                setIsFollowingProgress={setIsFollowingProgress}
                             />
                         ) : null}
                     </div>
