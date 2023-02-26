@@ -3,4 +3,5 @@ export const AuthTypes = {
     LOG_IN: 'LOG_IN',
     LOG_OUT: 'LOG_OUT',
     CHECK_LOGIN: 'CHECK_LOGIN',
+    INITIALIZED_SUCCESS: 'INITIALIZED_SUCCESS',
 }

@@ -4,11 +4,17 @@ import {connect} from 'react-redux';
 import {logIn} from '../../init/actions/authAction';
 
 // components
-import {LoginPage} from "./LoginPage";
+import {LoginPage} from './LoginPage';
+
+// other
+import {getErrorSelect, getIsAuthSelect} from '../../init/selectors/auth-selectors';
+import {regExpEmail} from "../../helpers/regExpHeplers";
 
 const mapStateToProps = (state) => {
     return {
-        isAuth: state.auth.isAuth,
+        isAuth: getIsAuthSelect(state),
+        error: getErrorSelect(state),
+        regExpEmail,
     }
 }
 

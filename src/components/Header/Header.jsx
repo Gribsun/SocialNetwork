@@ -1,5 +1,5 @@
 // core
-import React, {useEffect} from 'react';
+import React from 'react';
 import {NavLink} from 'react-router-dom';
 
 // components
@@ -11,11 +11,7 @@ import logo from '../../public/logo.gif';
 // styles
 import style from './Header.module.css';
 
-export const Header = ({isAuth, login, setUserData, logOut}) => {
-    useEffect(() => {
-        setUserData();
-    }, []);
-
+export const Header = ({isAuth, login, logOut}) => {
     return (
         <div className={style.header}>
             <img

@@ -6,7 +6,7 @@ import {useForm} from 'react-hook-form';
 // styles
 import style from './LoginPage.module.css';
 
-export const LoginPage = ({logIn, isAuth}) => {
+export const LoginPage = ({logIn, isAuth, regExpEmail}) => {
 
     const {register, handleSubmit, formState: {errors}} = useForm();
     const onSubmit = data => {
@@ -23,7 +23,7 @@ export const LoginPage = ({logIn, isAuth}) => {
                 <input type='email'
                        {...register("email", {
                            required: true,
-                           pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                           pattern: regExpEmail,
                        })}
                        aria-invalid={errors.message ? "true" : "false"}
                        className={errors.email ? style.inputFormError : style.inputForm}

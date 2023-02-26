@@ -7,7 +7,7 @@ import {authReducer} from './reducers/authReducer';
 
 const store = configureStore({
     reducer: {
-        posts: postsReducer,
+        postsCollection: postsReducer,
         messages: messagesReducer,
         userCollection: usersReducer,
         profile: profileReducer,

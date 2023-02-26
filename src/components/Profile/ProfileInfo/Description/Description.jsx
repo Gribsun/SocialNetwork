@@ -1,5 +1,5 @@
 // core
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 // other
 import icon from '../../../../public/settingsIcon.svg';
@@ -10,11 +10,16 @@ import style from './Description.module.css';
 export const Description = ({fullName, isMyProfile, status, updateUserStatus}) => {
     const [editMode, setEditMode] = useState(false);
     const [inputValue, setInputValue] = useState(status);
-    const activateEditModeHandler = () => {
+
+    useEffect(() => {
+        setInputValue(status);
+    }, [status]);
+
+    const activateEditMode = () => {
         setEditMode(true);
     };
 
-    const deactivateEditModeHandler = () => {
+    const deactivateEditMode = () => {
         setEditMode(false);
         updateUserStatus(inputValue);
     };
@@ -35,9 +40,9 @@ export const Description = ({fullName, isMyProfile, status, updateUserStatus}) =
                     ? <li className={style.inputLi}>
                         <input
                             value={inputValue}
-                            onChange={event => inputHandler(event)}
-                            onBlur={deactivateEditModeHandler}
-                            placeholder='Your serious status'
+                            onChange={inputHandler}
+                            onBlur={deactivateEditMode}
+                            autoFocus={true}
                         />
                     </li>
                     : <li className={style.li}>
@@ -46,7 +51,7 @@ export const Description = ({fullName, isMyProfile, status, updateUserStatus}) =
                             <img
                                 src={icon}
                                 alt='#'
-                                onClick={activateEditModeHandler}
+                                onClick={activateEditMode}
                                 className={style.iconSettings}
                             />}
                     </li>

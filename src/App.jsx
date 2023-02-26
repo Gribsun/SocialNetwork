@@ -1,34 +1,61 @@
 // core
-import React from 'react';
+import React, {Suspense, useEffect} from 'react';
 import {Routes, Route} from 'react-router-dom';
+import {connect, useDispatch} from 'react-redux';
 
 // components
 import {HeaderContainer} from './components/Header/HeaderContainer';
 import {Navbar} from './components/Navbar/Navbar';
-import ProfileContainer from './components/Profile/ProfileContainer';
-import UsersContainer from './components/Users/UsersContainer';
-import MessagesContainer from './components/Messages/MessagesContainer';
-import {LoginPageContainer} from "./components/LoginPage/LoginContainer";
+import {LoginPageContainer} from './components/LoginPage/LoginContainer';
 import {Footer} from './components/Footer/Footer';
+import {Preloader} from './components/common/Preloader/Preloader';
+
+// other
+import {initializedSuccess, setUserData} from './init/actions/authAction';
 
 // styles
 import style from './App.module.css';
+import {getInitializedSelect} from './init/selectors/auth-selectors';
 
-function App() {
+// components lazy loading
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const MessagesContainer = React.lazy(() => import('./components/Messages/MessagesContainer'));
+
+function App({initialized}) {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const promise = dispatch(setUserData());
+        Promise.all([promise])
+            .then(() => {
+                dispatch(initializedSuccess());
+            })
+    }, [dispatch]);
+
     return (
-        <div className={style.appWrapper}>
-            <HeaderContainer/>
-            <Navbar/>
-            <Routes>
-                <Route path='/profile' element={<ProfileContainer/>}/>
-                <Route path='/profile/:id' element={<ProfileContainer/>}/>
-                <Route path='/messages' element={<MessagesContainer/>}/>
-                <Route path='/users' element={<UsersContainer/>}/>
-                <Route path='/login' element={<LoginPageContainer/>}/>
-            </Routes>
-            <Footer/>
-        </div>
+        !initialized
+            ? <Preloader/>
+            : <div className={style.appWrapper}>
+                <HeaderContainer/>
+                <Navbar/>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        <Route path='/profile' element={<ProfileContainer/>}/>
+                        <Route path='/profile/:id' element={<ProfileContainer/>}/>
+                        <Route path='/messages' element={<MessagesContainer/>}/>
+                        <Route path='/users' element={<UsersContainer/>}/>
+                        <Route path='/login' element={<LoginPageContainer/>}/>
+                    </Routes>
+                </Suspense>
+                <Footer/>
+            </div>
     );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        initialized: getInitializedSelect(state),
+    };
+}
+export default connect(mapStateToProps, null)(App);

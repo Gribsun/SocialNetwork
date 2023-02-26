@@ -1,16 +1,17 @@
 // core
 import React, {useEffect} from 'react';
+import {Navigate} from 'react-router-dom';
+
 
 // components
 import {User} from './User/User';
-import {Preloader} from "../common/Preloader/Preloader";
-import {UsersSearchForm} from "./UsersSearchForm/UsersSearchForm";
+import {Preloader} from '../common/Preloader/Preloader';
+import {UsersSearchForm} from './UsersSearchForm/UsersSearchForm';
 
 // styles
 import style from './Users.module.css';
-import {Navigate} from "react-router-dom";
 
-export const Users = (
+const Users = (
     {
         users, pageSize, currentPage, totalCount, filter, isAuth,
         setFilter, isFetching, followingInProgress,
@@ -38,21 +39,21 @@ export const Users = (
     return (
         <>
             {isFetching
-                ? <Preloader />
+                ? <Preloader/>
                 : <div className={style.wrapper}>
                     <UsersSearchForm filter={filter} onFilterChanged={onFilterChanged}/>
-                    <div className={style.usersPage}>
+                    <div className={style.buttonsPageChange}>
                         <button
                             disabled={currentPage === 1}
-                            onClick={(event) => changePage(currentPage-1)}
-                            className={style.userPage}
+                            onClick={(event) => changePage(currentPage - 1)}
+                            className={style.buttonPageChange}
                         >
                             previous
                         </button>
                         <button
                             disabled={currentPage === totalCount}
-                            onClick={(event) => changePage(currentPage+1)}
-                            className={style.userPage}
+                            onClick={(event) => changePage(currentPage + 1)}
+                            className={style.buttonPageChange}
                         >
                             next
                         </button>
@@ -79,3 +80,5 @@ export const Users = (
         </>
     )
 }
+
+export default React.memo(Users);

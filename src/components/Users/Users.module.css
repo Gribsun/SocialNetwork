@@ -8,19 +8,24 @@
     flex-direction: column;
 }
 
-.usersPage{
+.buttonsPageChange{
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+
+    margin-top: 20px;
 }
 
-.userPage{
-    font-size: 20px;
-    height: 30px;
+.buttonPageChange{
+    height: 40px;
+    width: 100px;
+    margin: 0 14px;
     padding: 1px;
     border: 1px solid black;
+
     text-align: center;
+    font-size: 20px;
 }
 
 .activePage{

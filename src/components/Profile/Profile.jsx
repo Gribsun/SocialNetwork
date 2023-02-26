@@ -14,7 +14,16 @@ import mainPhoto from '../../public/big-serious-sam-history.jpg';
 // styles
 import style from './Profile.module.css';
 
-export const Profile = ({profile, isAuth, getUserProfile, getUserStatus, checkLogin, updateUserStatus, setIsFetching}) => {
+export const Profile = (
+    {
+        profile,
+        isAuth,
+        getUserProfile,
+        getUserStatus,
+        checkLogin,
+        updateUserStatus,
+        setIsFetching
+    }) => {
     const userId = useParams();
     const myUserId = useSelector(store => store.auth.userId);
     const [isMyProfile, setIsMyProfile] = useState(false);
@@ -22,22 +31,23 @@ export const Profile = ({profile, isAuth, getUserProfile, getUserStatus, checkLo
 
     useEffect(() => {
         checkLogin();
+        setIsFetching(true);
         if (!Object.keys(userId).length && myUserId) {
-            setIsFetching(true);
             getUserStatus({id: myUserId});
             getUserProfile({id: myUserId});
             setIsMyProfile(true);
         } else {
-            setIsFetching(true);
             getUserStatus(userId);
             getUserProfile(userId);
             setIsMyProfile(myUserId === +userId.id);
         }
     }, [userId, myUserId]);
+
     if (!isAuth) return <Navigate to={'/login'}/>
+
     return (
         isFetching
-            ? <Preloader />
+            ? <Preloader/>
             : <div className={style.profile}>
                 <img
                     src={mainPhoto}
@@ -48,4 +58,4 @@ export const Profile = ({profile, isAuth, getUserProfile, getUserStatus, checkLo
                 <PostsContainer isMyProfile={isMyProfile}/>
             </div>
     )
-}
+};

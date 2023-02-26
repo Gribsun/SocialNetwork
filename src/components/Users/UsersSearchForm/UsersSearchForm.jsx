@@ -1,9 +1,9 @@
 // core
 import React from 'react';
+import {useForm} from 'react-hook-form';
 
 // styles
 import style from './UsersSearchForm.module.css';
-import {useForm} from 'react-hook-form';
 
 export const UsersSearchForm = ({onFilterChanged}) => {
     const {register, handleSubmit, formState: {errors}} = useForm();

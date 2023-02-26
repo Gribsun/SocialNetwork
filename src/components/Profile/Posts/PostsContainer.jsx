@@ -4,17 +4,22 @@ import {connect} from 'react-redux';
 import {addPost} from '../../../init/actions/postsAction';
 
 // components
-import {Posts} from './Posts';
+import Posts from './Posts';
+
+// other
+import {getPosts} from "../../../init/selectors/posts-selectors";
+import {getIsAuthSelect} from "../../../init/selectors/auth-selectors";
 
 const mapStateToProps = (state) => {
     return {
-        posts: state.posts,
+        isAuth: getIsAuthSelect(state),
+        posts: getPosts(state),
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addPostHandle: (text) => {
+        addPost: (text) => {
             dispatch(addPost(text));
         },
     }

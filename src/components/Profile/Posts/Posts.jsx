@@ -8,11 +8,11 @@ import {AddPostForm} from './AddPostForm/AddPostForm'
 // styles
 import style from './Posts.module.css';
 
-export const Posts = ({posts, addPostHandle}) => {
+const Posts = ({posts, addPost}) => {
     return (
         <div className={style.posts}>
             <h1>My serious posts</h1>
-            <AddPostForm addPostHandle={addPostHandle}/>
+            <AddPostForm addPost={addPost}/>
             {posts.map(post =>
                 <Post
                     key={post.id}
@@ -25,3 +25,4 @@ export const Posts = ({posts, addPostHandle}) => {
         </div>
     )
 }
+export default React.memo(Posts);
