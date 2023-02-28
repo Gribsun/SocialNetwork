@@ -42,7 +42,7 @@ const Users = (
                 ? <Preloader/>
                 : <div className={style.wrapper}>
                     <UsersSearchForm filter={filter} onFilterChanged={onFilterChanged}/>
-                    <div className={style.buttonsPageChange}>
+                    <div className={style.buttonsWrapper}>
                         <button
                             disabled={currentPage === 1}
                             onClick={(event) => changePage(currentPage - 1)}
@@ -58,7 +58,7 @@ const Users = (
                             next
                         </button>
                     </div>
-                    <div className={style.users}>
+                    <div className={style.usersList}>
                         {users.length ? users.map(user =>
                             <User
                                 key={user.id}

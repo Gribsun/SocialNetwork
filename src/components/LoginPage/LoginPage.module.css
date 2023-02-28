@@ -1,8 +1,8 @@
-.wrapper{
+.wrapper {
     margin: 24px;
 }
 
-.form{
+.form {
     display: flex;
     flex-direction: column;
 
@@ -10,17 +10,15 @@
     align-items: center;
 }
 
-.inputForm{
+.inputForm {
     width: 260px;
     height: 40px;
 
     margin: 14px;
     padding: 8px;
-
-    border: 1px solid #1d1e21;
 }
 
-.inputFormError{
+.inputFormError {
     width: 260px;
     height: 40px;
 
@@ -30,12 +28,12 @@
     border: 1px solid #fd1c1d;
 }
 
-.textError{
+.textError {
     color: #fd1c1d;
     font-weight: bold;
 }
 
-.rememberMe{
+.rememberMe {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -44,18 +42,19 @@
     margin: 14px;
 }
 
-.inputCheckbox{
+.inputCheckbox {
     margin-left: 10px;
 
     width: 25px;
     height: 25px;
 }
 
-.buttonSubmit{
+.buttonSubmit {
     width: 160px;
     height: 60px;
 
-    border: 1px solid #1d1e21;
-
     font-size: 24px;
+
+    color: var(--color);
+    background-color: var(--button-color);
 }

@@ -43,34 +43,35 @@ export const ProfileDataForm = (
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                fullName:
+        <form onSubmit={handleSubmit(onSubmit)} className={style.inputsForm}>
+            <div className={style.inputWrapper}>
+                <label className={style.label}>fullName</label>
                 <input {...register('fullName', {required: true})}
                        className={style.inputForm}/>
             </div>
-            <div>
-                aboutMe:
+            <div className={style.inputWrapper}>
+                <label className={style.label}>aboutMe</label>
                 <input {...register('aboutMe', {required: true})}
                        className={style.inputForm}/>
             </div>
-            <div>
-                lookingForAJob:
+            <div className={style.inputWrapper}>
+                <label className={style.label}>lookingForAJob</label>
                 <input {...register('lookingForAJob', {required: false})}
                        type='checkbox'
                        className={style.inputForm}/>
             </div>
-            <div>
-                lookingForAJobDescription:
+            <div className={style.inputWrapper}>
+                <label className={style.label}>lookingForAJobDescription</label>
                 <input {...register('lookingForAJobDescription', {required: false})}
                        className={style.inputForm}/>
             </div>
             {fullContactList.length ? fullContactList.map((contact, index) => {
-                const contactKey = ''+Object.keys(contact);
+                const contactKey = '' + Object.keys(contact);
                 return (
-                    <div>
-                        {contactKey}: <input key={index} {...register(contactKey, {required: false})}
-                                             className={style.inputForm}/>
+                    <div className={style.inputWrapper}>
+                        <label className={style.label}>{contactKey}</label>
+                        <input key={index} {...register(contactKey, {required: false})}
+                               className={style.inputForm}/>
                     </div>
                 )
             }) : null}

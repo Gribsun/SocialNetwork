@@ -21,7 +21,6 @@ export const Messages = ({isAuth, messages, addMessage}) => {
                 {userDialogs.map(({id, name}) =>
                     <Dialog
                         key={id}
-                        id={id}
                         name={name}/>
                 )}
             </div>
@@ -30,7 +29,6 @@ export const Messages = ({isAuth, messages, addMessage}) => {
                     {messages.map(({id, message}) =>
                         <Message
                             key={id}
-                            id={id}
                             message={message}/>
                     )}
                 </div>

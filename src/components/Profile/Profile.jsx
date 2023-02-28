@@ -54,28 +54,24 @@ export const Profile = (
     const filterContactList = getActualContacts(profileData);
     const fullContactList = getFullContactList(profileData);
 
-    return (
-        isFetching
-            ? <Preloader/>
-            : <div className={style.profile}>
-                <img
-                    src={mainPhoto}
-                    alt='#'
-                    className={style.mainImage}
-                />
-                <ProfileInfo
-                    profile={profile}
-                    profileDataList={profileDataList}
-                    fullContactList={fullContactList}
-                    filterContactList={filterContactList}
-                    photos={photos}
-                    status={status}
-                    isMyProfile={isMyProfile}
-                    updateUserProfile={updateUserProfile}
-                    updateUserStatus={updateUserStatus}
-                    updatePhoto={updatePhoto}
-                />
-                <PostsContainer isMyProfile={isMyProfile}/>
-            </div>
-    )
+    return (isFetching ? <Preloader/> : <div className={style.profile}>
+        <img
+            src={mainPhoto}
+            alt='#'
+            className={style.mainImage}
+        />
+        <ProfileInfo
+            profile={profile}
+            profileDataList={profileDataList}
+            fullContactList={fullContactList}
+            filterContactList={filterContactList}
+            photos={photos}
+            status={status}
+            isMyProfile={isMyProfile}
+            updateUserProfile={updateUserProfile}
+            updateUserStatus={updateUserStatus}
+            updatePhoto={updatePhoto}
+        />
+        <PostsContainer/>
+    </div>)
 };

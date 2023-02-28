@@ -9,7 +9,7 @@ export const Dialog = ({id, name}) => {
     const path = `/messages/${id}`;
     return (
         <div className={style.dialog}>
-            <Link to={path}>{name}</Link>
+            <Link to={path} className={style.userName}>{name}</Link>
         </div>
     )
 }

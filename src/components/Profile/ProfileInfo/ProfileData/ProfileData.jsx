@@ -26,11 +26,11 @@ export const ProfileData = (
         setInputValue(status);
     }, [status]);
 
-    const editModeOn = () => {
+    const editStatusModeOn = () => {
         setEditMode(true);
     };
 
-    const editModeOff = () => {
+    const editStatusModeOff = () => {
         setEditMode(false);
         updateUserStatus(inputValue);
     };
@@ -40,31 +40,20 @@ export const ProfileData = (
     }
 
     return (
-        <div className={style.description}>
-            <div>
-                {isMyProfile && <button onClick={activateEditMode}>
-                    Редактировать <img src={icon} alt='#'/>
-                </button>}
-            </div>
+        <div className={style.wrapper}>
             <ul className={style.ul}>
                 {editMode
-                    ? <li className={style.inputLi}>
+                    ? <li className={style.li}>
                         <input
                             value={inputValue}
                             onChange={inputHandler}
-                            onBlur={editModeOff}
+                            onBlur={editStatusModeOff}
                             autoFocus={true}
+                            className={style.statusInput}
                         />
                     </li>
-                    : <li className={style.li}>
-                        {status ? `Status: ${status}` : isMyProfile ? 'How are you?' : ''}
-                        {isMyProfile &&
-                            <img
-                                src={icon}
-                                alt='#'
-                                onClick={editModeOn}
-                                className={style.iconSettings}
-                            />}
+                    : <li className={style.li} onDoubleClick={editStatusModeOn}>
+                        {status ? `${status}` : isMyProfile ? 'How are you?' : ''}
                     </li>
                 }
                 <li className={style.li}>
@@ -87,6 +76,9 @@ export const ProfileData = (
                     })}
                 </li> : null}
             </ul>
+            <div className={style.profileEdit}>
+                {isMyProfile && <img src={icon} alt='#' onClick={activateEditMode} className={style.iconSettings}/>}
+            </div>
         </div>
     )
 }

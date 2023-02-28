@@ -1,26 +1,40 @@
-.description{
+.wrapper {
+    display: flex;
+    flex-direction: row;
 
+    margin: 24px;
 }
 
-.ul{
+.ul {
     display: flex;
     flex-direction: column;
 
     margin: 0 20px;
 }
 
-.li{
+.statusInput {
+    font-size: 18px;
+    width: 80%;
+    padding: 8px;
+}
+
+.li {
     font-size: 24px;
 }
 
-.li:first-child{
+.li:first-child {
     margin: 0 0 30px 0;
 }
 
-.inputLi{
-    border: 1px solid #2e3136;
+.inputLi {
     width: 300px;
     height: 30px;
+}
+
+.profileEdit {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
 }
 
 .iconSettings {
@@ -28,4 +42,9 @@
     height: 20px;
 
     margin: 5px;
+}
+
+.buttonEdit {
+    background-color: var(--button-color);
+    color: var(--color);
 }

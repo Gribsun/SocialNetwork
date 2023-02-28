@@ -10,16 +10,17 @@
     width: 260px;
     height: 40px;
 
+    padding: 4px;
     margin: 5px;
-
-    border: 1px solid #1d1e21;
 }
 
 .buttonSubmit{
     width: 100px;
     height: 40px;
 
-    border: 1px solid #1d1e21;
+    border-radius: 8px;
 
+    background-color: var(--button-color);
+    color: var(--color);
     font-size: 24px;
 }

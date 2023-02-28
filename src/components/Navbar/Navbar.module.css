@@ -1,4 +1,4 @@
-.ul{
+.ul {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -7,18 +7,18 @@
     min-width: 200px;
 
     font-size: 30px;
-    color: white;
+    color: var(--color);
 
+    background-color: var(--background-color-main);
     grid-area: navbar;
-    background-color: rgba(29, 30, 33, 0.88);
 }
 
-.li{
+.li {
     margin: 20px 0;
 }
 
-.li a{
-    color: white;
+.li a {
+    color: var(--color);
 }
 
 .li a:active {

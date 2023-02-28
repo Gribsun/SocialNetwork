@@ -1,49 +1,42 @@
-.description{
-
-}
-
-.ul{
+.inputsForm {
     display: flex;
     flex-direction: column;
 
-    margin: 0 20px;
+    padding: 0 12px;
+
+    color: var(--color);
 }
 
-.li{
-    font-size: 24px;
+.inputWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
 }
 
-.li:first-child{
-    margin: 0 0 30px 0;
-}
-
-.inputLi{
-    border: 1px solid #2e3136;
-    width: 300px;
-    height: 30px;
-}
-
-.iconSettings {
-    width: 20px;
-    height: 20px;
-
-    margin: 5px;
-}
-
-.buttonSubmit{
+.buttonSubmit {
     width: 160px;
     height: 60px;
 
-    border: 1px solid #1d1e21;
-
     font-size: 24px;
+
+    color: var(--color);
+    background-color: var(--button-color);
+    border-radius: 8px;
 }
 
-.inputForm{
-    width: 260px;
+.label {
+    width: 40%;
+
+    font-size: 18px;
+}
+
+.inputForm {
+    width: 300px;
     height: 40px;
 
-    margin: 5px;
+    margin: 8px;
+    padding: 8px;
 
-    border: 1px solid #1d1e21;
+    font-size: 18px;
 }

@@ -12,10 +12,10 @@ import {Preloader} from './components/common/Preloader/Preloader';
 
 // other
 import {initializedSuccess, setUserData} from './init/actions/authAction';
+import {getInitializedSelect} from './init/selectors/auth-selectors';
 
 // styles
 import style from './App.module.css';
-import {getInitializedSelect} from './init/selectors/auth-selectors';
 
 // components lazy loading
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));

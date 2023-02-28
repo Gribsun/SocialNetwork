@@ -7,7 +7,7 @@ import avatar from "../../../../public/serious-sam.jpg";
 // styles
 import style from './Avatar.module.css';
 
-export const Avatar = ({isMyProfile, photos, updatePhoto}) => {
+export const Avatar = ({isMyProfile, photos, updatePhoto, editMode}) => {
     const {large} = photos;
 
     const onMainPhotoSelected = (event) => {
@@ -21,7 +21,7 @@ export const Avatar = ({isMyProfile, photos, updatePhoto}) => {
                 alt='#'
                 className={style.avatar}
             />
-            {isMyProfile && <input type="file" onChange={onMainPhotoSelected}/>}
+            {isMyProfile && editMode && <input type="file" onChange={onMainPhotoSelected}/>}
         </div>
     )
 }

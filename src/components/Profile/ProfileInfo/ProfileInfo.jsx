@@ -39,7 +39,13 @@ export const ProfileInfo = (
 
     return (
         <div className={style.main}>
-            {photos && <Avatar isMyProfile={isMyProfile} photos={photos} updatePhoto={updatePhoto}/>}
+            {photos
+                && <Avatar
+                    isMyProfile={isMyProfile}
+                    photos={photos}
+                    updatePhoto={updatePhoto}
+                    editMode={editMode}
+                />}
             {!editMode
                 ? <ProfileData
                     profileDataList={profileDataList}

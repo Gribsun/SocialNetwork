@@ -13,15 +13,13 @@ export const AddPostForm = ({addPost}) => {
     }
 
     return (
-        <div className={style.messageInputWindow}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input {...register("post", {required: true})}
-                       aria-invalid={errors.post ? "true" : "false"}
-                       className={style.inputForm}
-                />
-                {errors.post?.type === 'required' && <p role="alert">Enter the post test</p>}
-                <input type="submit" className={style.buttonSubmit}/>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className={style.postForm}>
+            <textarea {...register("post", {required: true})}
+                   aria-invalid={errors.post ? "true" : "false"}
+                   className={style.textareaForm}
+            />
+            {errors.post?.type === 'required' && <p role="alert">Enter the post test</p>}
+            <input type="submit" className={style.buttonSubmit}/>
+        </form>
     )
 }

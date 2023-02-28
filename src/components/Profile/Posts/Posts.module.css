@@ -1,28 +1,13 @@
-.posts{
+.postsWrapper {
     display: flex;
     flex-direction: column;
 
     margin: 30px;
 }
 
-.h1{
-    font-size: 24px;
-    margin: 10px 0 30px 0;
-}
-
-.textarea{
-    font-size: 24px;
-    border: 1px solid black;
-    margin: 0 0 20px 0;
-    padding: 10px;
-    min-height: 300px;
-}
-
-.addButton{
-    width: 100px;
-    height: 40px;
-    background-color: #2e3136;
-
-    font-size: 20px;
-    color: white;
+.postsList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

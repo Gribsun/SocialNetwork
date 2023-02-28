@@ -1,10 +1,10 @@
 // core
-import React from "react";
+import React from 'react';
 
 // styles
 import style from './Message.module.css';
 
-export const Message = ({id, message}) => {
+export const Message = ({message}) => {
     return (
         <div className={style.message}>
             {message}
