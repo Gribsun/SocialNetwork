@@ -15,7 +15,7 @@ export const User = ({
         followUser, unfollowUser,
         setIsFollowingProgress
 }) => {
-    const mainPhoto = photos.small;
+    const {small} = photos;
 
     const subscribeHandle = (id) => {
         setIsFollowingProgress(true);
@@ -32,7 +32,7 @@ export const User = ({
             <div className={style.userLogo}>
                 <NavLink to={`/profile/${id}`}>
                     <img
-                        src={mainPhoto ? mainPhoto : altPhoto}
+                        src={small ? small : altPhoto}
                         alt={altPhoto}
                         className={style.photo}
                     />

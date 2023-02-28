@@ -17,6 +17,20 @@ export const getUserProfile = ({id}) => async (dispatch) => {
     }
 };
 
+export const updateUserProfile = (profile) => async (dispatch) => {
+    try {
+        const response = await profileAPI.updateProfile(profile.profileData);
+        if (response.data.resultCode === 0) {
+            dispatch({
+                type: ProfileTypes.UPDATE_USER_INFO,
+                payload: profile.profileData,
+            })
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 export const getUserStatus = ({id}) => async (dispatch) => {
     try {
         if (id) {
@@ -45,6 +59,20 @@ export const updateUserStatus = (status) => async (dispatch) => {
             dispatch({
                 type: ProfileTypes.UPDATE_USER_STATUS,
                 payload: status,
+            })
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const updatePhoto = (file) => async (dispatch) => {
+    try {
+        const response = await profileAPI.savePhoto(file);
+        if (response.data.resultCode === 0) {
+            dispatch({
+                type: ProfileTypes.UPDATE_USER_PHOTO,
+                payload: response.data.data.photos,
             })
         }
     } catch (err) {

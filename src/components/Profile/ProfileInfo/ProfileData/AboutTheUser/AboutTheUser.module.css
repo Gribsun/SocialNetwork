@@ -2,9 +2,3 @@
     display: flex;
     flex-direction: column;
 }
-
-.avatar{
-    max-width: 400px;
-
-    margin: 0 auto;
-}

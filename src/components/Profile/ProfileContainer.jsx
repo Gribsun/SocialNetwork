@@ -3,7 +3,13 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 
 // actions
-import {getUserProfile, getUserStatus, updateUserStatus} from '../../init/actions/profileAction';
+import {
+    getUserProfile,
+    getUserStatus,
+    updatePhoto,
+    updateUserProfile,
+    updateUserStatus
+} from '../../init/actions/profileAction';
 import {setIsFetching} from '../../init/actions/generalAction';
 import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 
@@ -27,8 +33,10 @@ export default compose(
             getUserProfile,
             getUserStatus,
             checkLogin,
+            updateUserProfile,
             updateUserStatus,
-            setIsFetching
+            setIsFetching,
+            updatePhoto,
         }),
     WithAuthRedirect,
 )(Profile)

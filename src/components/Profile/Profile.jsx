@@ -6,10 +6,11 @@ import {useSelector} from 'react-redux';
 // components
 import {PostsContainer} from './Posts/PostsContainer';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo'
-import {Preloader} from "../common/Preloader/Preloader";
+import {Preloader} from '../common/Preloader/Preloader';
 
 // Other
 import mainPhoto from '../../public/big-serious-sam-history.jpg';
+import {getActualContacts, getFullContactList, getProfileDataItems} from '../../helpers/profileDataHelpers';
 
 // styles
 import style from './Profile.module.css';
@@ -22,6 +23,8 @@ export const Profile = (
         getUserStatus,
         checkLogin,
         updateUserStatus,
+        updateUserProfile,
+        updatePhoto,
         setIsFetching
     }) => {
     const userId = useParams();
@@ -42,8 +45,14 @@ export const Profile = (
             setIsMyProfile(myUserId === +userId.id);
         }
     }, [userId, myUserId]);
-
     if (!isAuth) return <Navigate to={'/login'}/>
+
+    const {profileData, status} = profile;
+    const {photos} = profileData;
+
+    const profileDataList = getProfileDataItems(profileData);
+    const filterContactList = getActualContacts(profileData);
+    const fullContactList = getFullContactList(profileData);
 
     return (
         isFetching
@@ -54,7 +63,18 @@ export const Profile = (
                     alt='#'
                     className={style.mainImage}
                 />
-                <ProfileInfo profile={profile} isMyProfile={isMyProfile} updateUserStatus={updateUserStatus}/>
+                <ProfileInfo
+                    profile={profile}
+                    profileDataList={profileDataList}
+                    fullContactList={fullContactList}
+                    filterContactList={filterContactList}
+                    photos={photos}
+                    status={status}
+                    isMyProfile={isMyProfile}
+                    updateUserProfile={updateUserProfile}
+                    updateUserStatus={updateUserStatus}
+                    updatePhoto={updatePhoto}
+                />
                 <PostsContainer isMyProfile={isMyProfile}/>
             </div>
     )
