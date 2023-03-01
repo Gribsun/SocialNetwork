@@ -7,6 +7,7 @@ const initialState = {
     login: null,
     isAuth: false,
     error: false,
+    captchaUrl: null,
 }
 
 export const authReducer = (
@@ -14,12 +15,6 @@ export const authReducer = (
     action
 ) => {
     switch (action.type) {
-        case AuthTypes.SET_USER_DATA: {
-            return {
-                ...state,
-                ...action.payload
-            }
-        }
         case AuthTypes.CHECK_LOGIN: {
             return {
                 ...state,
@@ -46,6 +41,12 @@ export const authReducer = (
             return {
                 ...state,
                 initialized: action.payload.initialized,
+            }
+        }
+        case AuthTypes.GET_CAPTCHA_URL_SUCCESS: {
+            return {
+                ...state,
+                captchaUrl: action.payload,
             }
         }
         default:

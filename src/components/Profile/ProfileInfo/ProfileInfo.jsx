@@ -61,8 +61,6 @@ export const ProfileInfo = (
                     updateUserProfile={updateUserProfile}
                 />
             }
-
-
         </div>
     )
 }

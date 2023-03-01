@@ -6,12 +6,12 @@ import {useForm} from 'react-hook-form';
 // styles
 import style from './LoginPage.module.css';
 
-export const LoginPage = ({logIn, isAuth, regExpEmail}) => {
+export const LoginPage = ({logIn, captchaUrl, isAuth, regExpEmail, error}) => {
 
     const {register, handleSubmit, formState: {errors}} = useForm();
     const onSubmit = data => {
-        const {email, password, rememberMe} = data;
-        logIn(email, password, rememberMe);
+        const {email, password, rememberMe, captcha} = data;
+        logIn(email, password, rememberMe, captcha);
     };
 
     if (isAuth) return <Navigate to={'/profile'}/>
@@ -45,6 +45,12 @@ export const LoginPage = ({logIn, isAuth, regExpEmail}) => {
                            className={style.inputCheckbox}
                     />
                 </div>
+                {error && <label>Incorrect Email or Password</label>}
+                {captchaUrl && <img src={captchaUrl} alt='#'/>}
+                {captchaUrl && <input type='text'{...register("captcha", {required: true})}
+                                      aria-invalid={errors.message ? "true" : "false"}
+                                      className={errors.captcha ? style.inputFormError : style.inputForm}
+                />}
                 <input type="submit" value="Send" className={style.buttonSubmit}/>
             </form>
         </div>

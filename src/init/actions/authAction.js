@@ -1,28 +1,14 @@
 import {AuthTypes} from '../types/authTypes';
-import {authAPI} from '../../api/api';
-
-export const setUserData = () => (dispatch) => {
-    return authAPI.me()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                const {id, email, login} = response.data.data;
-                dispatch({
-                    type: AuthTypes.SET_USER_DATA,
-                    payload: {
-                        userId: id, email, login, isAuth: true, error: false,
-                    },
-                })
-            }
-        });
-};
+import {authAPI, securityAPI} from '../../api/api';
 
 export const checkLogin = () => async (dispatch) => {
     const response = await authAPI.me();
     if (response.data.resultCode === 0) {
-        const {id, login} = response.data.data;
+        const {id, email, login} = response.data.data;
         dispatch({
             type: AuthTypes.CHECK_LOGIN,
             payload: {
+                email,
                 userId: id,
                 login,
                 isAuth: true,
@@ -40,8 +26,8 @@ export const checkLogin = () => async (dispatch) => {
     }
 };
 
-export const logIn = (email, password, rememberMe) => async (dispatch) => {
-    const response = await authAPI.logIn(email, password, rememberMe);
+export const logIn = (email, password, rememberMe, captcha) => async (dispatch) => {
+    const response = await authAPI.logIn(email, password, rememberMe, captcha);
     if (response.data.resultCode === 0) {
         dispatch({
             type: AuthTypes.LOG_IN,
@@ -51,6 +37,9 @@ export const logIn = (email, password, rememberMe) => async (dispatch) => {
             },
         })
     } else {
+        if (response.data.resultCode === 10) {
+            dispatch(getCaptchaUrl());
+        }
         dispatch({
             type: AuthTypes.LOG_IN,
             payload: {
@@ -65,7 +54,6 @@ export const logOut = () => async (dispatch) => {
     await authAPI.logOut();
     dispatch({
         type: AuthTypes.LOG_OUT,
-        payload: {},
     })
 };
 
@@ -75,5 +63,15 @@ export const initializedSuccess = () => async (dispatch) => {
         payload: {
             initialized: true,
         },
+    })
+}
+
+export const getCaptchaUrl = () => async (dispatch) => {
+    const response = await securityAPI.getCaptchaUrl();
+    const captchaUrl = response.data.url;
+
+    dispatch({
+        type: AuthTypes.GET_CAPTCHA_URL_SUCCESS,
+        payload: captchaUrl,
     })
 }

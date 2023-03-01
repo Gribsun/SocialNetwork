@@ -1,6 +1,6 @@
 // core
 import React, {Suspense, useEffect} from 'react';
-import {Routes, Route} from 'react-router-dom';
+import {Routes, Route, Navigate} from 'react-router-dom';
 import {connect, useDispatch} from 'react-redux';
 
 // components
@@ -11,7 +11,7 @@ import {Footer} from './components/Footer/Footer';
 import {Preloader} from './components/common/Preloader/Preloader';
 
 // other
-import {initializedSuccess, setUserData} from './init/actions/authAction';
+import {checkLogin, initializedSuccess} from './init/actions/authAction';
 import {getInitializedSelect} from './init/selectors/auth-selectors';
 
 // styles
@@ -26,7 +26,7 @@ function App({initialized}) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const promise = dispatch(setUserData());
+        const promise = dispatch(checkLogin());
         Promise.all([promise])
             .then(() => {
                 dispatch(initializedSuccess());
@@ -46,6 +46,7 @@ function App({initialized}) {
                         <Route path='/messages' element={<MessagesContainer/>}/>
                         <Route path='/users' element={<UsersContainer/>}/>
                         <Route path='/login' element={<LoginPageContainer/>}/>
+                        <Route path="/" element={<Navigate to="/profile" />} />
                     </Routes>
                 </Suspense>
                 <Footer/>
