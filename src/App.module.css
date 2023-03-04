@@ -1,17 +1,17 @@
-.appWrapper{
-  max-width: 1440px;
-  height: 100%;
-  margin: 0 auto;
-  background-color: var(--background-color-main);
-  display: grid;
+.appWrapper {
+    max-width: 1440px;
+    height: 100%;
+    margin: 0 auto;
+    background-color: var(--background-color-main);
+    display: grid;
 
-  color: var(--color);
+    color: var(--color);
 
-  grid-template-areas:
+    grid-template-areas:
     "header header"
     "navbar main"
     "footer footer";
 
-  grid-template-columns: 15% 85%;
-  grid-template-rows: 100px 14fr 80px;
+    grid-template-columns: 15% 85%;
+    grid-template-rows: 100px 14fr 80px;
 }

@@ -4,6 +4,7 @@ import {compose} from 'redux';
 
 // actions
 import {
+    checkIsMyProfile,
     getUserProfile,
     getUserStatus,
     updatePhoto,
@@ -37,6 +38,7 @@ export default compose(
             updateUserStatus,
             setIsFetching,
             updatePhoto,
+            checkIsMyProfile,
         }),
     WithAuthRedirect,
 )(Profile)

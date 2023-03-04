@@ -1,6 +1,6 @@
 // core
-import React, {useState, useEffect} from 'react';
-import {Navigate, useParams} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {useParams, Navigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
 // components
@@ -25,29 +25,28 @@ export const Profile = (
         updateUserStatus,
         updateUserProfile,
         updatePhoto,
-        setIsFetching
+        setIsFetching,
+        checkIsMyProfile
     }) => {
-    const userId = useParams();
+    const userId = +useParams().id;
     const myUserId = useSelector(store => store.auth.userId);
-    const [isMyProfile, setIsMyProfile] = useState(false);
     const {isFetching} = profile;
 
     useEffect(() => {
         checkLogin();
         setIsFetching(true);
-        if (!Object.keys(userId).length && myUserId) {
+        checkIsMyProfile(!userId);
+        if (userId) {
+            getUserStatus({id: userId});
+            getUserProfile({id: userId});
+        } else {
             getUserStatus({id: myUserId});
             getUserProfile({id: myUserId});
-            setIsMyProfile(true);
-        } else {
-            getUserStatus(userId);
-            getUserProfile(userId);
-            setIsMyProfile(myUserId === +userId.id);
         }
     }, [userId, myUserId]);
     if (!isAuth) return <Navigate to={'/login'}/>
 
-    const {profileData, status} = profile;
+    const {profileData, status, isMyProfile} = profile;
     const {photos} = profileData;
 
     const profileDataList = getProfileDataItems(profileData);
@@ -61,7 +60,6 @@ export const Profile = (
             className={style.mainImage}
         />
         <ProfileInfo
-            profile={profile}
             profileDataList={profileDataList}
             fullContactList={fullContactList}
             filterContactList={filterContactList}

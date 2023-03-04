@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
     return {
         isAuth: getIsAuthSelect(state),
         posts: getPosts(state),
+        isMyProfile: state.profile.isMyProfile,
     }
 }
 
