@@ -1,5 +1,9 @@
-.preloader{
-    margin: 0 auto;
-
-    width: 300px;
+.preloader {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: 50px;
 }

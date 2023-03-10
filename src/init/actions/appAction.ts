@@ -1,5 +1,5 @@
-import {AppDispatch} from "../index";
-import {AppActionTypes} from "../types/appTypes";
+import {AppDispatch} from '../index';
+import {AppActionTypes} from '../types/appTypes';
 
 export const initializedSuccess = () => async (dispatch: AppDispatch) => {
     dispatch({

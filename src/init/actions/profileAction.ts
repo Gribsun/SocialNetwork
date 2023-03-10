@@ -1,15 +1,15 @@
-import {ActionProfileTypes, IProfileState, UserPhotosType} from '../types/profileTypes';
-import {profileAPI} from '../../api/api';
+import {ActionProfileTypes, IProfileUser} from '../types/profileTypes';
+import {profileAPI} from '../../api';
 import {AppDispatch} from '../index';
 
-export const getUserProfile = ({id}: { id: number }) => async (dispatch: AppDispatch) => {
+export const getUserProfile = (id: number | null) => async (dispatch: AppDispatch) => {
     try {
         if (id) {
-            const response = await profileAPI.profile(id);
-            if (response.data) {
+            const data = await profileAPI.profile(id);
+            if (data) {
                 dispatch({
                     type: ActionProfileTypes.SET_USER_PROFILE,
-                    payload: response.data,
+                    payload: data,
                 })
             }
         }
@@ -18,60 +18,65 @@ export const getUserProfile = ({id}: { id: number }) => async (dispatch: AppDisp
     }
 };
 
-export const updateUserProfile = (profile: IProfileState) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await profileAPI.updateProfile(profile.profileData);
-        if (response.data.resultCode === 0) {
-            dispatch({
-                type: ActionProfileTypes.UPDATE_USER_INFO,
-                payload: profile.profileData,
-            })
-        }
-    } catch (err) {
-        console.log(err);
-    }
-};
-
-export const getUserStatus = ({id}: { id: number }) => async (dispatch: AppDispatch) => {
-    try {
-        if (id) {
-            const response = await profileAPI.status(id);
-            if (response.data) {
+export const updateUserProfile = (profileData: Omit<IProfileUser, 'photos'>) =>
+    async (dispatch: AppDispatch) => {
+        try {
+            const data = await profileAPI.updateProfile(profileData);
+            if (data.resultCode === 0) {
                 dispatch({
-                    type: ActionProfileTypes.GET_USER_STATUS,
-                    payload: response.data,
-                })
-            } else {
-                dispatch({
-                    type: ActionProfileTypes.GET_USER_STATUS,
-                    payload: '',
+                    type: ActionProfileTypes.UPDATE_USER_INFO,
+                    payload: {
+                        profileData
+                    },
                 })
             }
+        } catch (err) {
+            console.log(err);
         }
-    } catch (err) {
-        console.log(err);
-    }
-};
+    };
 
-export const updateUserStatus = (status: string) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await profileAPI.updateStatus(status);
-        if (response) {
-            dispatch({
-                type: ActionProfileTypes.UPDATE_USER_STATUS,
-                payload: status,
-            })
+export const getUserStatus = (id: number | null) =>
+    async (dispatch: AppDispatch) => {
+        try {
+            if (id) {
+                const data = await profileAPI.status(id);
+                if (data) {
+                    dispatch({
+                        type: ActionProfileTypes.GET_USER_STATUS,
+                        payload: data,
+                    })
+                } else {
+                    dispatch({
+                        type: ActionProfileTypes.GET_USER_STATUS,
+                        payload: '',
+                    })
+                }
+            }
+        } catch (err) {
+            console.log(err);
         }
-    } catch (err) {
-        console.log(err);
-    }
-};
+    };
+
+export const updateUserStatus = (status: string) =>
+    async (dispatch: AppDispatch) => {
+        try {
+            const data = await profileAPI.updateStatus(status);
+            if (data) {
+                dispatch({
+                    type: ActionProfileTypes.UPDATE_USER_STATUS,
+                    payload: status,
+                })
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
 export const updatePhoto = (file: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await profileAPI.savePhoto(file);
-        if (response.data.resultCode === 0) {
-            const {photos}: {photos: UserPhotosType} = response.data.data.photos;
+        const data = await profileAPI.savePhoto(file);
+        if (data.resultCode === 0) {
+            const {photos} = data.data;
             dispatch({
                 type: ActionProfileTypes.UPDATE_USER_PHOTO,
                 payload: photos,

@@ -1,5 +1,5 @@
-import {ActionGeneralTypes} from "../types/generalTypes";
-import {AppDispatch} from "../index";
+import {ActionGeneralTypes} from '../types/generalTypes';
+import {AppDispatch} from '../index';
 
 export const setIsFetching = (
     isFetching: boolean

@@ -10,30 +10,40 @@ type FormValuesType = {
     email: string,
     password: string,
     rememberMe: boolean,
-    captcha: string,
+    captchaUrl: undefined | string,
     message: string,
 };
 
 type LoginPagePropsType = {
+    isAuth: boolean,
+    captchaUrl: string | undefined,
+    regExpEmail: RegExp,
+    error: boolean,
     logIn: (email: string,
             password: string,
             rememberMe: boolean,
-            captcha: string,) => void,
-    captchaUrl: string | null,
-    isAuth: boolean,
-    regExpEmail: RegExp,
-    error: boolean,
+            captchaUrl: undefined | string
+    ) => void,
 }
 
-export const LoginPage: FC<LoginPagePropsType> = ({logIn, captchaUrl, isAuth, regExpEmail, error}) => {
+export const LoginPage: FC<LoginPagePropsType> = (
+    {
+        isAuth,
+        logIn,
+        captchaUrl,
+        regExpEmail,
+        error
+    }) => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormValuesType>();
+    const {register, handleSubmit, formState: {errors, isValid}} = useForm<FormValuesType>({
+        mode: 'onSubmit'
+    });
     const onSubmit: SubmitHandler<FormValuesType> = (data): void => {
-        const {email, password, rememberMe, captcha} = data;
-        logIn(email, password, rememberMe, captcha);
+        const {email, password, rememberMe, captchaUrl} = data;
+        logIn(email, password, rememberMe, captchaUrl);
     };
 
-    if (isAuth) return <Navigate to={'/profile'}/>
+    if (isAuth) return <Navigate to={'/profile'}/>;
 
     return (
         <div className={style.wrapper}>
@@ -66,11 +76,16 @@ export const LoginPage: FC<LoginPagePropsType> = ({logIn, captchaUrl, isAuth, re
                 </div>
                 {error && <label>Incorrect Email or Password</label>}
                 {captchaUrl && <img src={captchaUrl} alt='#'/>}
-                {captchaUrl && <input type='text'{...register("captcha", {required: true})}
+                {captchaUrl && <input type='text'{...register("captchaUrl", {required: true})}
                                       aria-invalid={errors.message ? "true" : "false"}
-                                      className={errors.captcha ? style.inputFormError : style.inputForm}
+                                      className={errors.captchaUrl ? style.inputFormError : style.inputForm}
                 />}
-                <input type="submit" value="Send" className={style.buttonSubmit}/>
+                <input
+                    type="submit"
+                    disabled={!isValid}
+                    value="Send"
+                    className={isValid ? style.buttonSubmit : style.disabledButtonSubmit}
+                />
             </form>
         </div>
     );

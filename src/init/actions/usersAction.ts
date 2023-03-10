@@ -1,6 +1,7 @@
 import {ActionUsersTypes} from '../types/usersTypes';
-import {usersAPI} from '../../api/api';
+import {usersAPI} from '../../api';
 import {AppDispatch} from '../index';
+import {ResultCodeEnum} from '../../api/apiTypes';
 
 export const getUsers = (
     pageSize = 5,
@@ -8,11 +9,11 @@ export const getUsers = (
     term = ''
 ) => async (dispatch: AppDispatch) => {
     try {
-        const response = await usersAPI.users(pageSize, page, term);
-        if (response.data) {
-            const {items, totalCount} = response.data;
+        const data = await usersAPI.users(pageSize, page, term);
+        if (data) {
+            const {items, totalCount} = data;
             dispatch({
-                type: ActionUsersTypes.SET_USERS,
+                type: ActionUsersTypes.GET_USERS,
                 payload: {
                     items,
                     currentPage: page,
@@ -25,22 +26,10 @@ export const getUsers = (
     }
 };
 
-export const setFilter = (term: string) => async (dispatch: AppDispatch) => {
-    try {
-        dispatch({
-            type: ActionUsersTypes.SET_FILTER,
-            payload: term,
-        });
-    } catch (err) {
-        console.log(err);
-    }
-};
-
-
 export const followUser = (userId: number) => async (dispatch: AppDispatch) => {
     try {
-        const response = await usersAPI.follow(userId);
-        if (response.data.resultCode === 0) {
+        const data = await usersAPI.follow(userId);
+        if (data.resultCode === ResultCodeEnum.Success) {
             dispatch({
                 type: ActionUsersTypes.FOLLOW,
                 payload: userId,
@@ -53,8 +42,8 @@ export const followUser = (userId: number) => async (dispatch: AppDispatch) => {
 
 export const unfollowUser = (userId: number) => async (dispatch: AppDispatch) => {
     try {
-        const response = await usersAPI.unfollow(userId);
-        if (response.data.resultCode === 0) {
+        const data = await usersAPI.unfollow(userId);
+        if (data.resultCode === ResultCodeEnum.Success) {
             dispatch({
                 type: ActionUsersTypes.UNFOLLOW,
                 payload: userId,
@@ -63,4 +52,11 @@ export const unfollowUser = (userId: number) => async (dispatch: AppDispatch) =>
     } catch (err) {
         console.log(err);
     }
+};
+
+export const setFilter = (term: string) => async (dispatch: AppDispatch) => {
+    dispatch({
+        type: ActionUsersTypes.SET_FILTER,
+        payload: term,
+    });
 };

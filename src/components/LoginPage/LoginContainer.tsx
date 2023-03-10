@@ -10,20 +10,20 @@ import {RootState} from '../../init';
 
 // other
 import {logIn} from '../../init/actions/authAction';
-import {getCaptchaSelect, getErrorSelect, getIsAuthSelect} from '../../init/selectors/auth-selectors';
+import {getCaptchaSelect, getErrorSelect} from '../../init/selectors/auth-selectors';
 import {regExpEmail} from '../../helpers/regExpHeplers';
 
 type MapStatePropsType = {
-    captchaUrl: string | null,
     isAuth: boolean,
+    captchaUrl: string | undefined,
     error: boolean,
     regExpEmail: RegExp,
 }
 
 const mapStateToProps = (state: RootState): MapStatePropsType => {
     return {
+        isAuth: state.auth.isAuth,
         captchaUrl: getCaptchaSelect(state),
-        isAuth: getIsAuthSelect(state),
         error: getErrorSelect(state),
         regExpEmail,
     }

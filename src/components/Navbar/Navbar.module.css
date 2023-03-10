@@ -1,16 +1,25 @@
+.navbarWrapper {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    float: left;
+
+    width: 200px;
+    height: 100%;
+
+    top: 150px;
+}
+
 .ul {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
 
-    min-width: 200px;
-
     font-size: 30px;
     color: var(--color);
 
     background-color: var(--background-color-main);
-    grid-area: navbar;
 }
 
 .li {

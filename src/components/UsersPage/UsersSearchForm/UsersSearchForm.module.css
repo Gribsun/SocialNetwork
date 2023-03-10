@@ -1,0 +1,57 @@
+.form {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.inputFormWitchClear {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid #4b4b4b;
+    border-radius: 8px;
+
+    margin-bottom: 14px;
+}
+
+.inputForm {
+    width: 260px;
+    height: 64px;
+
+    padding: 8px;
+    margin: 5px;
+
+    font-size: 18px;
+    background-color: var(--background-color-content);
+    color: var(--color);
+}
+
+.buttonClear {
+    background-color: var(--background-color-content);
+}
+
+.buttonClearImg {
+    padding: 4px 18px 4px 4px;
+    background-color: var(--background-color-content);
+}
+
+.buttonSubmit {
+    width: 120px;
+    height: 60px;
+
+    border-radius: 8px;
+
+    background-color: var(--background-color-content);
+    color: var(--color);
+    font-size: 24px;
+    transition: 0.2s;
+}
+
+.buttonSubmit:hover {
+    transition: 0.2s;
+    background-color: var(--button-color);
+}

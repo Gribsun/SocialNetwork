@@ -10,7 +10,6 @@ import {Header} from './Header';
 import {RootState} from '../../init';
 
 type MapStatePropsType = {
-    isAuth: boolean,
     login: string | null,
 }
 
@@ -20,7 +19,6 @@ type MapDispatchPropsType = {
 
 const mapStateToProps = (state: RootState): MapStatePropsType => {
     return {
-        isAuth: state.auth.isAuth,
         login: state.auth.login,
     }
 }

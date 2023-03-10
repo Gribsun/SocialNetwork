@@ -13,12 +13,11 @@ import logo from '../../public/logo.gif';
 import style from './Header.module.css';
 
 type HeaderPropsType = {
-    isAuth: boolean,
     login: string | null,
     logOut: () => void,
 }
 
-export const Header: FC<HeaderPropsType> = ({isAuth, login, logOut}) => {
+export const Header: FC<HeaderPropsType> = ({login, logOut}) => {
     const {theme, setTheme} = useTheme();
 
     const handleChangeTheme = () => {
@@ -26,19 +25,21 @@ export const Header: FC<HeaderPropsType> = ({isAuth, login, logOut}) => {
     }
 
     return (
-        <div className={style.header}>
-            <img
-                src={logo}
-                alt='#'
-                className={style.headerImage}
-            />
-            <button onClick={handleChangeTheme} className={style.themeToggleButton}>
-                {`${theme}`}
-            </button>
-            <div className={style.loginBlock}>
-                {isAuth
-                    ? login && <UserPanel login={login} logOut={logOut}/>
-                    : <NavLink to={'/login'}>login</NavLink>}
+        <div id='applicationPage' className={style.headerWrapper}>
+            <div className={style.header}>
+                <img
+                    src={logo}
+                    alt='#'
+                    className={style.headerImage}
+                />
+                <button onClick={handleChangeTheme} className={style.themeToggleButton}>
+                    {`${theme}`}
+                </button>
+                <div className={style.loginBlock}>
+                    {localStorage.getItem('isAuth')
+                        ? login && <UserPanel login={login} logOut={logOut}/>
+                        : <NavLink to={'/login'}>login</NavLink>}
+                </div>
             </div>
         </div>
     )

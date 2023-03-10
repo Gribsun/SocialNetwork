@@ -1,8 +1,12 @@
-.header {
-    grid-area: header;
-    /*position: fixed;*/
+.headerWrapper {
+    display: block;
+    overflow: hidden;
+    position: fixed;
+    z-index: 120;
     width: 100%;
+}
 
+.header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;

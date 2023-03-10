@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import {HeaderContainer} from './components/Header/HeaderContainer';
 import {Navbar} from './components/Navbar/Navbar';
 import LoginPageContainer from './components/LoginPage/LoginContainer';
-import {Footer} from './components/Footer/Footer';
+// import {Footer} from './components/Footer/Footer';
 import {Preloader} from './components/common/Preloader/Preloader';
 
 // types
@@ -23,9 +23,9 @@ import {useAppDispatch} from './hooks/redux-hooks';
 import style from './App.module.css';
 
 // components lazy loading
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
-const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
-const MessagesContainer = React.lazy(() => import('./components/Messages/MessagesContainer'));
+const UsersContainer = React.lazy(() => import('./components/UsersPage/UsersContainer'));
+const ProfileContainer = React.lazy(() => import('./components/ProfilePage/ProfileContainer'));
+const MessagesContainer = React.lazy(() => import('./components/MessagesPage/MessagesContainer'));
 
 const App: FC<{ initialized: IAppState }> = ({initialized}) => {
     const dispatch = useAppDispatch();
@@ -41,20 +41,24 @@ const App: FC<{ initialized: IAppState }> = ({initialized}) => {
     return (
         !initialized
             ? <Preloader/>
-            : <div className={style.appWrapper}>
+            : <div id='applicationBlock' className={style.appWrapper} aria-disabled={true}>
                 <HeaderContainer/>
-                <Navbar/>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <Routes>
-                        <Route path='/profile' element={<ProfileContainer/>}/>
-                        <Route path='/profile/:id' element={<ProfileContainer/>}/>
-                        <Route path='/messages' element={<MessagesContainer/>}/>
-                        <Route path='/users' element={<UsersContainer/>}/>
-                        <Route path='/login' element={<LoginPageContainer/>}/>
-                        <Route path="/" element={<Navigate to="/profile"/>}/>
-                    </Routes>
-                </Suspense>
-                <Footer/>
+                <div className={style.appWrapperContent}>
+                    <Navbar/>
+                    <div className={style.appContent}>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <Routes>
+                                <Route path='/profile' element={<ProfileContainer/>}/>
+                                <Route path='/profile/:id' element={<ProfileContainer/>}/>
+                                <Route path='/messages' element={<MessagesContainer/>}/>
+                                <Route path='/users' element={<UsersContainer/>}/>
+                                <Route path='/login' element={<LoginPageContainer/>}/>
+                                <Route path="/" element={<Navigate to="/profile"/>}/>
+                            </Routes>
+                        </Suspense>
+                    </div>
+                </div>
+                {/*<Footer/>*/}
             </div>
     );
 }

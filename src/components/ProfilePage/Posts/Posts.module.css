@@ -1,0 +1,21 @@
+.postsWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+
+    margin: 30px 60px;
+}
+
+.postsList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+
+    margin-top: 20px;
+    background-color: var(--input-background-color);
+
+    border-radius: 8px;
+}

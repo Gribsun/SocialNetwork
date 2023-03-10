@@ -55,7 +55,7 @@ export const profileReducer = (
                 ...state,
                 profileData: {
                     ...state.profileData,
-                    ...action.payload
+                    ...action.payload,
                 }
             }
         }

@@ -25,7 +25,7 @@ export interface IProfileContacts {
 
 export interface IProfileUser {
     aboutMe: string,
-    userId: number,
+    userId: number | null,
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     fullName: string,

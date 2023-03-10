@@ -2,12 +2,12 @@ import {AuthActionTypes, IAuthState} from '../types/authTypes';
 import {AnyAction} from 'redux';
 
 const initialState: IAuthState = {
+    isAuth: false,
     email: null,
     userId: null,
     login: null,
-    isAuth: false,
     error: false,
-    captchaUrl: null,
+    captchaUrl: undefined,
 }
 
 export const authReducer = (
@@ -30,10 +30,10 @@ export const authReducer = (
         case AuthActionTypes.LOG_OUT: {
             return {
                 ...state,
+                isAuth: false,
                 email: null,
                 userId: null,
                 login: null,
-                isAuth: false,
                 error: false,
             }
         }

@@ -10,6 +10,6 @@ export interface IAuthState {
     userId: null | number,
     email: null | string,
     login: null | string,
-    captchaUrl: null | string,
+    captchaUrl: undefined | string,
     error: boolean,
 }

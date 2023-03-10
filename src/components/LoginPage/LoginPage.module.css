@@ -58,3 +58,15 @@
     color: var(--color);
     background-color: var(--button-color);
 }
+
+.disabledButtonSubmit {
+    width: 160px;
+    height: 60px;
+
+    font-size: 24px;
+
+    color: gray;
+    background-color: yellow;
+
+    opacity: 50%;
+}

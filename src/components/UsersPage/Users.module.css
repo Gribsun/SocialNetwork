@@ -1,0 +1,48 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--background-color-content);
+}
+
+.buttonsWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+
+    margin-top: 30px;
+}
+
+.buttonPageChange {
+    height: 75px;
+    width: 100px;
+    margin: 0 14px;
+    padding: 4px;
+
+    text-align: center;
+    font-size: 24px;
+
+    background-color: var(--background-color-content);
+    color: var(--color);
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.buttonPageChange:disabled {
+    color: gray;
+}
+
+.buttonPageChange:disabled:hover {
+    background-color: var(--background-color-content);
+}
+
+.buttonPageChange:hover {
+    background-color: var(--button-color);
+    transition: 0.2s;
+}
+
+.usersList {
+    display: flex;
+    flex-direction: column;
+}
