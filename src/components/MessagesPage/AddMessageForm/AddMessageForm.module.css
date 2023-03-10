@@ -1,28 +1,39 @@
 .messageInputWindow {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
 
     width: 100%;
-}
-
-.buttonSubmit {
-    width: 160px;
-    height: 60px;
-
-    font-size: 24px;
-
-    color: var(--color);
-    background-color: var(--button-color);
-    border-radius: 8px;
 }
 
 .inputForm {
     width: 60%;
     height: 100px;
 
-    margin: 5px 0 20px 0;
     padding: 8px;
 
     font-size: 24px;
+
+    background-color: var(--input-background-color);
+    color: var(--input-text-color);
+    border-radius: 8px;
 }
 
+.buttonSubmit {
+    width: 160px;
+    height: 60px;
+
+    background-color: var(--background-color-content);
+    color: var(--color);
+    border-radius: 8px;
+
+    font-size: 24px;
+
+    transition: 0.2s;
+}
+
+.buttonSubmit:hover {
+    background-color: var(--button-color);
+    transition: 0.2s;
+}

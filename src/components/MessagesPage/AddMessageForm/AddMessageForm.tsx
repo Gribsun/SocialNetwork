@@ -23,9 +23,9 @@ export const AddMessageForm: FC<AddMessageFormProps> = ({addMessage}) => {
     }
 
     const onSubmit: SubmitHandler<FormValuesType> = data => {
-        const {message} = data;
+        const {messageText} = data;
+        addMessage(messageText);
         setText('');
-        addMessage(message);
     };
 
     return (
