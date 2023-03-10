@@ -28,5 +28,6 @@ export interface IUsersState {
     followingInProgress: boolean,
     filter: {
         term: string,
+        friend: null | boolean,
     },
 }

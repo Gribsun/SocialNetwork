@@ -2,6 +2,7 @@ import {UserType} from '../../../init/types/usersTypes';
 
 export type FilterType = {
     term: string,
+    friend: boolean | null,
 }
 
 type UsersDataType = {
@@ -16,8 +17,8 @@ type UsersDataType = {
 }
 
 type UsersFunctionType = {
-    setFilter: (term: string) => void,
-    getUsers: (pageSize: number, page: number, term?: string) => void,
+    setFilter: (term: string, friend: null | boolean) => void,
+    getUsers: (pageSize: number, page: number, term: string, friend: null | boolean) => void,
     followUser: (id: number) => void,
     unfollowUser: (id: number) => void,
     setIsFetching: (isFetching: boolean) => void,

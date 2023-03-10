@@ -6,10 +6,11 @@ import {ResultCodeEnum} from '../../api/apiTypes';
 export const getUsers = (
     pageSize = 5,
     page = 1,
-    term = ''
+    term: string,
+    friend: null | boolean,
 ) => async (dispatch: AppDispatch) => {
     try {
-        const data = await usersAPI.users(pageSize, page, term);
+        const data = await usersAPI.users(pageSize, page, term, friend);
         if (data) {
             const {items, totalCount} = data;
             dispatch({
@@ -54,9 +55,12 @@ export const unfollowUser = (userId: number) => async (dispatch: AppDispatch) =>
     }
 };
 
-export const setFilter = (term: string) => async (dispatch: AppDispatch) => {
+export const setFilter = (term: string, friend: null | boolean) => async (dispatch: AppDispatch) => {
     dispatch({
         type: ActionUsersTypes.SET_FILTER,
-        payload: term,
+        payload: {
+            term,
+            friend,
+        },
     });
 };

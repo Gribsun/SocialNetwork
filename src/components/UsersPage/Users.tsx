@@ -24,7 +24,7 @@ const Users: FC<UsersPropsType> = (
 ) => {
     useEffect(() => {
         setIsFetching(true);
-        getUsers(pageSize, 1);
+        getUsers(pageSize, 1, '', null);
     }, [isAuth]);
 
     if (!localStorage.getItem('isAuth')) {
@@ -33,12 +33,12 @@ const Users: FC<UsersPropsType> = (
 
     const changePage = (pageNumber: number) => {
         setIsFetching(true);
-        getUsers(pageSize, pageNumber, filter.term);
+        getUsers(pageSize, pageNumber, filter.term, filter.friend);
     }
 
-    const onFilterChanged = (pageNumber: number, filter: { term: string }) => {
-        setFilter(filter.term);
-        getUsers(pageSize, 1, filter.term);
+    const onFilterChanged = (pageNumber: number, filter: { term: string, friend: null | boolean }) => {
+        setFilter(filter.term, filter.friend);
+        getUsers(pageSize, 1, filter.term, filter.friend);
     }
 
     return (
@@ -56,7 +56,7 @@ const Users: FC<UsersPropsType> = (
                         </button>
                         <UsersSearchForm onFilterChanged={onFilterChanged}/>
                         <button
-                            disabled={currentPage === totalCount}
+                            disabled={currentPage === totalCount || users.length < 5}
                             onClick={() => changePage(currentPage + 1)}
                             className={style.buttonPageChange}
                         >

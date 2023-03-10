@@ -11,6 +11,7 @@ const initialState: IUsersState = {
     followingInProgress: false,
     filter: {
         term: '',
+        friend: null,
     },
 }
 
@@ -30,7 +31,10 @@ export const usersReducer = (
         case ActionUsersTypes.SET_FILTER:
             return {
                 ...state,
-                filter: {term: action.payload},
+                filter: {
+                    term: action.payload.term,
+                    friend: action.payload.friend,
+                },
             }
         case ActionUsersTypes.FOLLOW:
             return {

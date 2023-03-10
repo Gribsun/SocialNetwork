@@ -10,9 +10,11 @@ import style from './UsersSearchForm.module.css';
 
 // types
 import {FilterType} from '../types/UsersPageTypes';
+import {changingFilterFriendsTypes} from "../../../helpers/usersSearchHelpers";
 
 type FormValuesType = {
     term: string,
+    friend: string,
     search: string,
     message: string,
 };
@@ -34,7 +36,8 @@ export const UsersSearchForm: FC<UsersSearchFormType> = ({onFilterChanged}) => {
     }, [resetAsyncForm])
 
     const onSubmit: SubmitHandler<FormValuesType> = (filter) => {
-        onFilterChanged(1, filter);
+        const editedFilter = changingFilterFriendsTypes(filter);
+        onFilterChanged(1, editedFilter);
     };
 
     return (
@@ -54,6 +57,17 @@ export const UsersSearchForm: FC<UsersSearchFormType> = ({onFilterChanged}) => {
                     <img src={clear} alt='#' className={style.buttonClearImg}/>
                 </button>
             </div>
+            <select {...register('friend')} className={style.radioButtons}>
+                <option value='null'>
+                    All users
+                </option>
+                <option value='true'>
+                    Subscription users
+                </option>
+                <option value='false'>
+                    Unsubscribed users
+                </option>
+            </select>
             <input type='submit' value='search' className={style.buttonSubmit}/>
         </form>
     )
