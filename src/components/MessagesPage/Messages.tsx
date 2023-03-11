@@ -1,5 +1,6 @@
 // core
 import React, {FC} from 'react';
+import {useAppSelector} from '../../hooks/redux-hooks';
 
 // components
 import {Dialog} from './Dialog/Dialog';
@@ -11,22 +12,10 @@ import {userDialogs} from '../../data/userDialogs';
 
 // styles
 import style from './Messages.module.css';
-import {Navigate} from "react-router-dom";
 
-type MessageType = {
-    id: number,
-    message: string,
-}
+export const Messages: FC = () => {
+    const messages = useAppSelector(state => state.messages);
 
-type MessagesPropsType = {
-    isAuth: boolean,
-    messages: Array<MessageType>,
-    addMessage: (text: string) => void,
-}
-export const Messages: FC<MessagesPropsType> = (props) => {
-    if (!localStorage.getItem('isAuth')) {
-        return <Navigate to={'/login'}/>;
-    }
     return (
         <div className={style.wrapper}>
             <div className={style.dialogsItems}>
@@ -39,14 +28,14 @@ export const Messages: FC<MessagesPropsType> = (props) => {
             </div>
             <div className={style.messageWindow}>
                 <div className={style.messages}>
-                    {props.messages.map(({id, message}) =>
+                    {messages.map(({id, message}) =>
                         <Message
                             key={id}
                             message={message}
                         />
                     )}
                 </div>
-                <AddMessageForm addMessage={props.addMessage}/>
+                <AddMessageForm/>
             </div>
         </div>
     )

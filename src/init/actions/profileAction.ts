@@ -1,4 +1,4 @@
-import {ActionProfileTypes, IProfileUser} from '../types/profileTypes';
+import {ActionProfileTypes, IProfileData} from '../types/profileTypes';
 import {profileAPI} from '../../api';
 import {AppDispatch} from '../index';
 
@@ -18,7 +18,7 @@ export const getUserProfile = (id: number | null) => async (dispatch: AppDispatc
     }
 };
 
-export const updateUserProfile = (profileData: Omit<IProfileUser, 'photos'>) =>
+export const updateUserProfile = (profileData: IProfileData) =>
     async (dispatch: AppDispatch) => {
         try {
             const data = await profileAPI.updateProfile(profileData);
@@ -61,6 +61,7 @@ export const updateUserStatus = (status: string) =>
     async (dispatch: AppDispatch) => {
         try {
             const data = await profileAPI.updateStatus(status);
+
             if (data) {
                 dispatch({
                     type: ActionProfileTypes.UPDATE_USER_STATUS,

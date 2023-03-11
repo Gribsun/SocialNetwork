@@ -3,13 +3,14 @@ import React, {FC} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 
 // other
-import {useAppSelector} from '../../../../hooks/redux-hooks';
+import {useAppDispatch, useAppSelector} from '../../../../hooks/redux-hooks';
+import {updateUserProfile} from '../../../../init/actions/profileAction';
 
 // styles
 import style from './ProfileDataForm.module.css';
 
 // types
-import {IProfileContacts, IProfileUser} from '../../../../init/types/profileTypes';
+import {IProfileContacts, IProfileData} from '../../../../init/types/profileTypes';
 
 type FormValuesType = {
     fullName: string,
@@ -29,23 +30,22 @@ type FormValuesType = {
 type ProfileDataFormPropsType = {
     fullContactList: Array<Record<keyof IProfileContacts, IProfileContacts[keyof IProfileContacts]>>,
     inputValue: string,
-    updateUserProfile: (profile: Omit<IProfileUser, 'photos'>) => void,
     deactivateEditMode: (inputValue: string) => void,
 }
 
 export const ProfileDataForm: FC<ProfileDataFormPropsType> = (
     {
         fullContactList,
-        updateUserProfile,
         deactivateEditMode,
         inputValue,
     }) => {
+    const dispatch = useAppDispatch();
     const userId = useAppSelector(store => store.auth.userId);
 
     const {register, handleSubmit, formState: {errors}} = useForm<FormValuesType>();
 
     const onSubmit: SubmitHandler<FormValuesType> = (data) => {
-        const profileData: Omit<IProfileUser, 'photos'> = {
+        const profileData: IProfileData = {
             userId: null,
             fullName: '',
             aboutMe: '',
@@ -82,7 +82,7 @@ export const ProfileDataForm: FC<ProfileDataFormPropsType> = (
         profileData.fullName = fullName;
         profileData.aboutMe = aboutMe;
         profileData.contacts = {facebook, website, vk, twitter, instagram, youtube, github, mainLink};
-        updateUserProfile(profileData);
+        dispatch(updateUserProfile(profileData));
         deactivateEditMode(inputValue);
     };
 

@@ -2,6 +2,7 @@ import {ActionUsersTypes} from '../types/usersTypes';
 import {usersAPI} from '../../api';
 import {AppDispatch} from '../index';
 import {ResultCodeEnum} from '../../api/apiTypes';
+import {ActionGeneralTypes} from "../types/generalTypes";
 
 export const getUsers = (
     pageSize = 5,
@@ -11,6 +12,7 @@ export const getUsers = (
 ) => async (dispatch: AppDispatch) => {
     try {
         const data = await usersAPI.users(pageSize, page, term, friend);
+
         if (data) {
             const {items, totalCount} = data;
             dispatch({
@@ -54,6 +56,17 @@ export const unfollowUser = (userId: number) => async (dispatch: AppDispatch) =>
         console.log(err);
     }
 };
+
+
+export const setIsFollowingProgress = (
+    followingInProgress: boolean
+) => (dispatch: AppDispatch) => {
+    dispatch({
+        type: ActionGeneralTypes.TOGGLE_IS_FOLLOWING_PROGRESS,
+        payload: followingInProgress,
+    });
+};
+
 
 export const setFilter = (term: string, friend: null | boolean) => async (dispatch: AppDispatch) => {
     dispatch({

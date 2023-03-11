@@ -18,15 +18,11 @@ type ProfileInfoProps = {
     fullContactList: Array<Record<string, IProfileContacts[keyof IProfileContacts]>>,
     photos: UserPhotosType
     status: string,
-    isMyProfile: boolean,
     editMode: boolean,
     inputValue: string,
     activateEditMode: () => void,
     deactivateEditMode: (inputValue: string) => void,
-    setInputValue: (value: string) => void,
-    updateUserProfile: (profile: Omit<IProfileUser, 'photos'>) => void,
-    updateUserStatus: (status: string) => void,
-    updatePhoto: (photo: string) => void,
+    setInputValue: (value: string) => void
 }
 
 export const ProfileInfo: FC<ProfileInfoProps> = (
@@ -36,10 +32,6 @@ export const ProfileInfo: FC<ProfileInfoProps> = (
         fullContactList,
         photos,
         status,
-        isMyProfile,
-        updateUserProfile,
-        updateUserStatus,
-        updatePhoto,
         editMode,
         activateEditMode,
         deactivateEditMode,
@@ -55,9 +47,7 @@ export const ProfileInfo: FC<ProfileInfoProps> = (
         <div className={style.main}>
             {photos
                 && <Avatar
-                    isMyProfile={isMyProfile}
                     photos={photos}
-                    updatePhoto={updatePhoto}
                     editMode={editMode}
                 />}
             {!editMode
@@ -65,14 +55,11 @@ export const ProfileInfo: FC<ProfileInfoProps> = (
                     profileDataList={profileDataList}
                     filterContactList={filterContactList}
                     status={status}
-                    isMyProfile={isMyProfile}
                     activateEditMode={activateEditMode}
-                    updateUserStatus={updateUserStatus}
                 />
                 : <ProfileDataForm
                     fullContactList={fullContactList}
                     deactivateEditMode={deactivateEditMode}
-                    updateUserProfile={updateUserProfile}
                     inputValue={inputValue}
                 />
             }

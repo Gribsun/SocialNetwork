@@ -1,5 +1,5 @@
 import {instance} from './common/instance';
-import {IProfileUser} from '../init/types/profileTypes';
+import {IProfileData} from '../init/types/profileTypes';
 import {
     ProfileIdResponseType, ProfilePhotoResponseType,
     ProfileResponseType,
@@ -8,7 +8,7 @@ import {
 } from './apiTypes';
 
 export const profileAPI = {
-    updateProfile(profile: Omit<IProfileUser, 'photos'>) {
+    updateProfile(profile: IProfileData) {
         return instance
             .put<ProfileResponseType>(`profile`, profile)
             .then(response => response.data);

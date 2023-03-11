@@ -24,8 +24,9 @@ export interface IProfileContacts {
 }
 
 export interface IProfileUser {
-    aboutMe: string,
     userId: number | null,
+    status: string,
+    aboutMe: string,
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     fullName: string,
@@ -37,5 +38,13 @@ export interface IProfileState {
     profileData: IProfileUser,
     isMyProfile: boolean,
     isFetching: boolean,
-    status: string,
+}
+
+export interface IProfileData {
+    userId: number | null,
+    aboutMe: string,
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    contacts: IProfileContacts,
 }

@@ -2,7 +2,7 @@ import {IUsersState, ActionUsersTypes} from '../types/usersTypes';
 import {ActionGeneralTypes} from '../types/generalTypes';
 import {AnyAction} from 'redux';
 
-const initialState: IUsersState = {
+export const initialState: IUsersState = {
     users: [],
     pageSize: 5,
     totalCount: 0,

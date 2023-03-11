@@ -1,88 +1,79 @@
 // core
 import React, {FC, useEffect} from 'react';
-import {Navigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 
 // components
-import {Preloader} from '../common/Preloader/Preloader';
 import {UsersSearchForm} from './UsersSearchForm/UsersSearchForm';
 import {User} from './User/User';
 
+// other
+import {getUsers, setFilter} from '../../init/actions/usersAction';
+import {
+    getCurrentPageSelect,
+    getFilterUsersSelect,
+    getPageSizeSelect,
+    getTotalCountSelect, getUserSelect
+} from '../../init/selectors/users-selectors';
+
 // types
-import {UsersPropsType} from './types/UsersPageTypes';
+import {FilterType} from './types/UsersPageTypes';
 
 // styles
 import style from './Users.module.css';
 
-const Users: FC<UsersPropsType> = (
-    {
-        isAuth, users, pageSize,
-        currentPage, totalCount, filter,
-        setFilter, isFetching, followingInProgress,
-        getUsers, followUser, unfollowUser,
-        setIsFetching, setIsFollowingProgress
-    }
-) => {
+export const Users: FC = () => {
+    const users = useAppSelector(getUserSelect);
+    const pageSize = useAppSelector(getPageSizeSelect);
+    const currentPage = useAppSelector(getCurrentPageSelect);
+    const totalCount = useAppSelector(getTotalCountSelect);
+    const filter = useAppSelector(getFilterUsersSelect);
+
+    const dispatch = useAppDispatch();
+
     useEffect(() => {
-        setIsFetching(true);
-        getUsers(pageSize, 1, '', null);
-    }, [isAuth]);
+        dispatch(getUsers(pageSize, 1, '', null));
+    }, []);
 
-    if (!localStorage.getItem('isAuth')) {
-        return <Navigate to={'/login'}/>;
+    const onPageChanged = (pageNumber: number) => {
+        dispatch(getUsers(pageSize, pageNumber, filter.term, filter.friend));
     }
 
-    const changePage = (pageNumber: number) => {
-        setIsFetching(true);
-        getUsers(pageSize, pageNumber, filter.term, filter.friend);
-    }
-
-    const onFilterChanged = (pageNumber: number, filter: { term: string, friend: null | boolean }) => {
-        setFilter(filter.term, filter.friend);
-        getUsers(pageSize, 1, filter.term, filter.friend);
+    const onFilterChanged = (pageNumber: number, filter: FilterType) => {
+        dispatch(setFilter(filter.term, filter.friend));
+        dispatch(getUsers(pageSize, 1, filter.term, filter.friend));
     }
 
     return (
-        <>
-            {isFetching
-                ? <Preloader/>
-                : <div className={style.wrapper}>
-                    <div className={style.buttonsWrapper}>
-                        <button
-                            disabled={currentPage === 1}
-                            onClick={() => changePage(currentPage - 1)}
-                            className={style.buttonPageChange}
-                        >
-                            previous
-                        </button>
-                        <UsersSearchForm onFilterChanged={onFilterChanged}/>
-                        <button
-                            disabled={currentPage === totalCount || users.length < 5}
-                            onClick={() => changePage(currentPage + 1)}
-                            className={style.buttonPageChange}
-                        >
-                            next
-                        </button>
-                    </div>
-                    <div className={style.usersList}>
-                        {users.length ? users.map(user =>
-                            <User
-                                key={user.id}
-                                id={user.id}
-                                name={user.name}
-                                photos={user.photos}
-                                followed={user.followed}
-                                uniqueUrlName={user.uniqueUrlName}
-                                followingInProgress={followingInProgress}
-                                followUser={followUser}
-                                unfollowUser={unfollowUser}
-                                setIsFollowingProgress={setIsFollowingProgress}
-                            />
-                        ) : null}
-                    </div>
-                </div>
-            }
-        </>
+        <div className={style.wrapper}>
+            <div className={style.buttonsWrapper}>
+                <button
+                    disabled={currentPage === 1}
+                    onClick={() => onPageChanged(currentPage - 1)}
+                    className={style.buttonPageChange}
+                >
+                    previous
+                </button>
+                <UsersSearchForm onFilterChanged={onFilterChanged}/>
+                <button
+                    disabled={currentPage === totalCount || users.length < 5}
+                    onClick={() => onPageChanged(currentPage + 1)}
+                    className={style.buttonPageChange}
+                >
+                    next
+                </button>
+            </div>
+            <div className={style.usersList}>
+                {users.length ? users.map(user =>
+                    <User
+                        key={user.id}
+                        id={user.id}
+                        name={user.name}
+                        photos={user.photos}
+                        followed={user.followed}
+                        uniqueUrlName={user.uniqueUrlName}
+                    />
+                ) : null}
+            </div>
+        </div>
     )
 }
-
-export default React.memo(Users);

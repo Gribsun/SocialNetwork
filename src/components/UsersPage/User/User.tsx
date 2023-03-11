@@ -1,42 +1,35 @@
 // core
 import React, {FC} from 'react';
 import {NavLink} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux-hooks';
 
 // other
 import altPhoto from '../../../public/users/Gnaar.png';
+import {followUser, setIsFollowingProgress, unfollowUser} from '../../../init/actions/usersAction';
+import {getFollowingInProgressSelect} from '../../../init/selectors/users-selectors';
 
 // styles
 import style from './User.module.css';
 
 // types
 import {UserType} from '../../../init/types/usersTypes';
-type UserDataType = {
-    followingInProgress: boolean,
-}
-type UserFunctionType = {
-    followUser: (id: number) => void,
-    unfollowUser: (id: number) => void,
-    setIsFollowingProgress: (followingInProgress: boolean) => void,
-}
-type UserPropsType = Omit<UserType, 'status'> & UserDataType & UserFunctionType;
 
-export const User: FC<UserPropsType> = ({
-        id, name, photos,
-        followed,
-        followingInProgress,
-        followUser, unfollowUser,
-        setIsFollowingProgress
-}) => {
+type UserPropsType = Omit<UserType, 'status'>;
+
+export const User: FC<UserPropsType> = ({id, name, photos, followed}) => {
+    const dispatch = useAppDispatch();
+    const followingInProgress = useAppSelector(getFollowingInProgressSelect);
+
     const {small} = photos;
 
     const subscribeHandle = (id: number) => {
-        setIsFollowingProgress(true);
-        followUser(id);
+        dispatch(setIsFollowingProgress(true));
+        dispatch(followUser(id));
     }
 
     const unsubscribeHandle = (id: number) => {
-        setIsFollowingProgress(true);
-        unfollowUser(id);
+        dispatch(setIsFollowingProgress(true));
+        dispatch(unfollowUser(id));
     }
 
     return (

@@ -1,27 +1,43 @@
 // core
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, FC, ChangeEvent} from "react";
+import {useAppDispatch, useAppSelector} from '../../../../hooks/redux-hooks';
 
 // components
 import {Contact} from './Contact/Contact';
-import {AboutTheUser} from "./AboutTheUser/AboutTheUser";
+import {AboutTheUser} from './AboutTheUser/AboutTheUser';
 
 // other
+import {updateUserStatus} from '../../../../init/actions/profileAction';
 import icon from '../../../../public/settingsIcon.png';
 
 // styles
 import style from './ProfileData.module.css';
 
-export const ProfileData = (
+// types
+import {IProfileContacts, IProfileUser} from '../../../../init/types/profileTypes';
+import {getIsMyProfileSelect} from "../../../../init/selectors/profile-selectors";
+
+type ProfileDataType = {
+    profileDataList: Array<Record<string, IProfileUser[keyof IProfileUser]>>,
+    filterContactList: Array<Record<string, IProfileContacts[keyof IProfileContacts]>>,
+    status: string,
+    activateEditMode: () => void,
+}
+
+export const ProfileData: FC<ProfileDataType> = (
     {
         profileDataList,
         filterContactList,
         status,
-        isMyProfile,
-        activateEditMode,
-        updateUserStatus
+        activateEditMode
     }) => {
+    const dispatch = useAppDispatch();
     const [editMode, setEditMode] = useState(false);
     const [inputValue, setInputValue] = useState(status);
+
+    const isMyProfile = useAppSelector(getIsMyProfileSelect);
+    console.log('isMyProfile', isMyProfile);
+
     useEffect(() => {
         setInputValue(status);
     }, [status]);
@@ -32,10 +48,10 @@ export const ProfileData = (
 
     const editStatusModeOff = () => {
         setEditMode(false);
-        updateUserStatus(inputValue);
+        dispatch(updateUserStatus(inputValue));
     };
 
-    const inputHandler = (event) => {
+    const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
     }
 
@@ -60,8 +76,8 @@ export const ProfileData = (
                     {profileDataList && profileDataList.map(data =>
                         <AboutTheUser
                             key={Math.ceil(Math.random() * 1000)}
+                            //@ts-ignore
                             data={data}
-                            isMyProfile={isMyProfile}
                         />)}
                 </li>
                 {filterContactList.length ? <li className={style.li}>
@@ -71,7 +87,6 @@ export const ProfileData = (
                             <Contact
                                 key={Math.ceil(Math.random() * 1000)}
                                 contact={contact}
-                                isMyProfile={isMyProfile}
                             />)
                     })}
                 </li> : null}

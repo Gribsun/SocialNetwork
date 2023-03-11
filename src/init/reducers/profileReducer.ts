@@ -4,7 +4,8 @@ import {AnyAction} from 'redux';
 
 const initialState: IProfileState = {
     profileData: {
-        userId: 0,
+        userId: null,
+        status: '',
         aboutMe: '',
         lookingForAJob: false,
         lookingForAJobDescription: '',
@@ -24,9 +25,8 @@ const initialState: IProfileState = {
             mainLink: '',
         },
     },
-    isMyProfile: true,
+    isMyProfile: false,
     isFetching: false,
-    status: '',
 }
 
 export const profileReducer = (
@@ -47,7 +47,10 @@ export const profileReducer = (
         case ActionProfileTypes.GET_USER_STATUS: {
             return {
                 ...state,
-                status: action.payload,
+                profileData: {
+                    ...state.profileData,
+                    status: action.payload,
+                },
             }
         }
         case ActionProfileTypes.UPDATE_USER_INFO: {
@@ -62,7 +65,10 @@ export const profileReducer = (
         case ActionProfileTypes.UPDATE_USER_STATUS: {
             return {
                 ...state,
-                status: action.payload,
+                profileData: {
+                    ...state.profileData,
+                    status: action.payload,
+                },
             }
         }
         case ActionProfileTypes.UPDATE_USER_PHOTO: {

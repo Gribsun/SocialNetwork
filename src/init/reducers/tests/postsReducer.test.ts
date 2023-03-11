@@ -1,6 +1,6 @@
 import {postsReducer} from '../postsReducer';
-import {initialState} from "../../../data/posts";
-import {ActionPostsTypes} from "../../types/postsTypes";
+import {initialState} from '../../../data/posts';
+import {ActionPostsTypes} from '../../types/postsTypes';
 
 const state = initialState;
 

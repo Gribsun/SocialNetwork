@@ -4,17 +4,16 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 
 // styles
 import style from './AddMessageForm.module.css';
-
-type AddMessageFormProps = {
-    addMessage: (text: string) => void,
-}
+import {addMessage} from "../../../init/actions/messagesAction";
+import {useAppDispatch} from "../../../hooks/redux-hooks";
 
 type FormValuesType = {
     messageText: string,
     message: string,
 };
 
-export const AddMessageForm: FC<AddMessageFormProps> = ({addMessage}) => {
+export const AddMessageForm: FC = () => {
+    const dispatch = useAppDispatch();
     const [text, setText] = useState('');
     const {register, handleSubmit, formState: {errors}} = useForm<FormValuesType>();
 
@@ -24,7 +23,7 @@ export const AddMessageForm: FC<AddMessageFormProps> = ({addMessage}) => {
 
     const onSubmit: SubmitHandler<FormValuesType> = data => {
         const {messageText} = data;
-        addMessage(messageText);
+        dispatch(addMessage(messageText));
         setText('');
     };
 
