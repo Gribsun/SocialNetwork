@@ -39,29 +39,49 @@
     background-color: var(--background-color-content);
 }
 
+.selectAndSubmitWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 10px;
+    width: 320px;
+}
+
+.selectFriend {
+    width: 200px;
+    height: 40px;
+    padding: 10px;
+
+    text-align: center;
+    font-size: 18px;
+    border-radius: 8px;
+    background: var(--button-color);
+    color: var(--color);
+    outline: none;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.optionFriend {
+
+}
+
 .buttonSubmit {
-    width: 120px;
-    height: 60px;
+    width: 100px;
+    height: 40px;
 
     border-radius: 8px;
 
     background-color: var(--background-color-content);
     color: var(--color);
-    font-size: 24px;
+    font-size: 18px;
     transition: 0.2s;
 }
 
 .buttonSubmit:hover {
     transition: 0.2s;
     background-color: var(--button-color);
-}
-
-.radioButtons {
-    display: flex;
-    flex-direction: row;
-}
-
-.checkboxFriend {
-    width: 50px;
-    height: 50px;
 }

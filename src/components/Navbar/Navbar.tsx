@@ -1,11 +1,11 @@
 // core
-import React from 'react';
+import React, {FC} from 'react';
 import {Link} from 'react-router-dom';
 
 // styles
 import style from './Navbar.module.css';
 
-export const Navbar = () => {
+export const Navbar: FC = () => {
     return (
         <div className={style.navbarWrapper}>
             <ul className={style.ul}>

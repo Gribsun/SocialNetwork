@@ -36,7 +36,6 @@ export const ProfileData: FC<ProfileDataType> = (
     const [inputValue, setInputValue] = useState(status);
 
     const isMyProfile = useAppSelector(getIsMyProfileSelect);
-    console.log('isMyProfile', isMyProfile);
 
     useEffect(() => {
         setInputValue(status);

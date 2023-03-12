@@ -1,7 +1,12 @@
 // core
 import React, {FC} from 'react';
-import {Navigate} from 'react-router-dom';
 import {useForm, SubmitHandler} from 'react-hook-form';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
+
+// other
+import {getCaptchaSelect, getErrorSelect} from '../../init/selectors/auth-selectors';
+import {logIn} from '../../init/actions/authAction';
+import {regExpEmail} from '../../helpers/regExpHeplers';
 
 // styles
 import style from './LoginPage.module.css';
@@ -14,36 +19,19 @@ type FormValuesType = {
     message: string,
 };
 
-type LoginPagePropsType = {
-    isAuth: boolean,
-    captchaUrl: string | undefined,
-    regExpEmail: RegExp,
-    error: boolean,
-    logIn: (email: string,
-            password: string,
-            rememberMe: boolean,
-            captchaUrl: undefined | string
-    ) => void,
-}
-
-export const LoginPage: FC<LoginPagePropsType> = (
-    {
-        isAuth,
-        logIn,
-        captchaUrl,
-        regExpEmail,
-        error
-    }) => {
-
+export const Login: FC = () => {
+    const dispatch = useAppDispatch();
     const {register, handleSubmit, formState: {errors, isValid}} = useForm<FormValuesType>({
         mode: 'onSubmit'
     });
+
+    const captchaUrl = useAppSelector(getCaptchaSelect);
+    const error = useAppSelector(getErrorSelect);
+
     const onSubmit: SubmitHandler<FormValuesType> = (data): void => {
         const {email, password, rememberMe, captchaUrl} = data;
-        logIn(email, password, rememberMe, captchaUrl);
+        dispatch(logIn(email, password, rememberMe, captchaUrl));
     };
-
-    if (isAuth) return <Navigate to={'/profile'}/>;
 
     return (
         <div className={style.wrapper}>

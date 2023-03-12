@@ -1,5 +1,5 @@
 // core
-import React, {FC, useCallback, useEffect} from 'react';
+import React, {FC, useState} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 
 // other
@@ -9,8 +9,8 @@ import clear from '../../../public/clear.png'
 import style from './UsersSearchForm.module.css';
 
 // types
-import {FilterType} from '../types/UsersPageTypes';
-import {changingFilterFriendsTypes} from "../../../helpers/usersSearchHelpers";
+import {IFilter, IParsed} from '../types/UsersPageTypes';
+import {changingFilterFriendsTypes} from '../../../helpers/usersSearchHelpers';
 
 type FormValuesType = {
     term: string,
@@ -20,25 +20,32 @@ type FormValuesType = {
 };
 
 type UsersSearchFormType = {
-    onFilterChanged: (pageNumber: number, filter: FilterType) => void
+    parsedSearchParams: IParsed,
+    onFilterChanged: (pageNumber: number, filter: IFilter) => void
 }
 
-export const UsersSearchForm: FC<UsersSearchFormType> = ({onFilterChanged}) => {
+export const UsersSearchForm: FC<UsersSearchFormType> = ({parsedSearchParams, onFilterChanged}) => {
     const {register, handleSubmit, formState: {errors}, reset} = useForm<FormValuesType>();
-
-    const resetAsyncForm = useCallback(() => {
-        const result = {term: ''};
-        reset(result);
-    }, [reset]);
-
-    useEffect(() => {
-        resetAsyncForm()
-    }, [resetAsyncForm])
+    const [termInForm, setTermInForm] = useState(parsedSearchParams.term);
+    const [defaultValueForSelect, setDefaultValueForSelect] = useState(parsedSearchParams.friend);
 
     const onSubmit: SubmitHandler<FormValuesType> = (filter) => {
         const editedFilter = changingFilterFriendsTypes(filter);
         onFilterChanged(1, editedFilter);
     };
+
+    const clearInputHandler = () => {
+        reset(formValues => {
+            onFilterChanged(1, {term: '', friend: null});
+            setTermInForm('');
+            setDefaultValueForSelect(null);
+            return ({
+                ...formValues,
+                term: '',
+                friend: 'null',
+            })
+        })
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
@@ -46,29 +53,33 @@ export const UsersSearchForm: FC<UsersSearchFormType> = ({onFilterChanged}) => {
                 <input {...register('term', {required: false})}
                        aria-invalid={errors.search ? 'true' : 'false'}
                        placeholder='Search'
+                       value={termInForm ? termInForm : ''}
+                       onChange={(event) => setTermInForm(event.target.value)}
                        className={style.inputForm}
                 />
-                <button onClick={() =>
-                    reset(formValues => ({
-                        ...formValues,
-                        term: '',
-                    }))}
+                <button onClick={clearInputHandler}
                 >
                     <img src={clear} alt='#' className={style.buttonClearImg}/>
                 </button>
             </div>
-            <select {...register('friend')} className={style.radioButtons}>
-                <option value='null'>
-                    All users
-                </option>
-                <option value='true'>
-                    Subscription users
-                </option>
-                <option value='false'>
-                    Unsubscribed users
-                </option>
-            </select>
-            <input type='submit' value='search' className={style.buttonSubmit}/>
+            <div className={style.selectAndSubmitWrapper}>
+                <select
+                    {...register('friend')}
+                    defaultValue={String(defaultValueForSelect)}
+                    className={style.selectFriend}>
+                    <option value='null' className={style.optionFriend}>
+                        All users
+                    </option>
+                    <option value='true' className={style.optionFriend}>
+                        Subscription users
+                    </option>
+                    <option value='false' className={style.optionFriend}>
+                        Unsubscribed users
+                    </option>
+                </select>
+                <input type='submit' value='search' className={style.buttonSubmit}/>
+            </div>
+
         </form>
     )
 }

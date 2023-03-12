@@ -42,7 +42,6 @@ export const User: FC<UserPropsType> = ({id, name, photos, followed}) => {
                         className={style.photo}
                     />
                 </NavLink>
-
             </div>
             <div className={style.userInfo}>
                 <div className={style.userName}>{name}</div>

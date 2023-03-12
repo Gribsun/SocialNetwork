@@ -1,6 +1,8 @@
-export type FilterType = {
+export interface IFilter {
     term: string,
     friend: boolean | null,
 }
 
-export type UsersPropsType = {};
+export interface IParsed extends IFilter {
+    page: number,
+}

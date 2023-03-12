@@ -26,12 +26,12 @@ export const Profile: FC = () => {
 
     useEffect(() => {
         dispatch(checkIsMyProfile(!userId));
-        if (!userId) {
+        if (!userId || Number(userId) === myUserId) {
             const id = myUserId;
             dispatch(getUserStatus(id));
             dispatch(getUserProfile(id));
         } else {
-            const id = +userId;
+            const id = Number(userId);
             dispatch(getUserStatus(id));
             dispatch(getUserProfile(id));
         }

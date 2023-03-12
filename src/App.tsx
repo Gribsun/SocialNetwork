@@ -3,9 +3,10 @@ import React, {FC, Suspense, useEffect} from 'react';
 import {Routes, Route, Navigate} from 'react-router-dom';
 
 // components
-import {HeaderContainer} from './components/Header/HeaderContainer';
+import {Preloader} from './components/common/Preloader/Preloader';
+import {Header} from './components/Header/Header';
 import {Navbar} from './components/Navbar/Navbar';
-import LoginPageContainer from './components/LoginPage/LoginContainer';
+import {LoginPage} from './components/LoginPage/LoginPage';
 
 // other
 import {checkLogin} from './init/actions/authAction';
@@ -35,20 +36,19 @@ export const App: FC = () => {
     return (
         <>
             {!initialized
-                ? null
+                ? <Preloader />
                 : <div id='applicationBlock' className={style.appWrapper} aria-disabled={true}>
-                    <HeaderContainer/>
+                    <Header/>
                     <div className={style.appWrapperContent}>
                         <Navbar/>
                         <div className={style.appContent}>
                             <Suspense fallback={<div>Loading...</div>}>
                                 <Routes>
-                                    <Route path='/profile' element={<ProfilePage/>}/>
-                                    <Route path='/profile/:id' element={<ProfilePage/>}/>
+                                    <Route path='/profile/:id?' element={<ProfilePage/>}/>
                                     <Route path='/messages' element={<MessagesPage/>}/>
                                     <Route path='/users' element={<UsersPage/>}/>
-                                    <Route path='/login' element={<LoginPageContainer/>}/>
-                                    <Route path="/" element={<Navigate to="/profile"/>}/>
+                                    <Route path='/login' element={<LoginPage/>}/>
+                                    <Route path='/' element={<Navigate to='/profile'/>}/>
                                 </Routes>
                             </Suspense>
                         </div>
