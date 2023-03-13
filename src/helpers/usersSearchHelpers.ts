@@ -1,4 +1,4 @@
-import {IFilter, IParsed} from '../components/UsersPage/types/UsersPageTypes';
+import {IFilter, IParsed} from '../components/Users/types/UsersPageTypes';
 
 type FormValuesType = {
     term: string,

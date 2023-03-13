@@ -13,10 +13,10 @@ export const Navbar: FC = () => {
                     <Link to='/profile'>My profile</Link>
                 </li>
                 <li className={style.li}>
-                    <Link to='/messages'>Messages</Link>
+                    <Link to='/users'>Serious users</Link>
                 </li>
                 <li className={style.li}>
-                    <Link to='/users'>Serious users</Link>
+                    <Link to='/chat'>Chat</Link>
                 </li>
                 <li className={style.li}>
                     <Link to='/news'>News</Link>

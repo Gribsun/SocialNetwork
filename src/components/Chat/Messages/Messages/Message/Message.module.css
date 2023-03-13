@@ -1,0 +1,28 @@
+.messageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+
+    border-bottom: 4px solid #404040;
+}
+
+.userInfoInMessage {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+
+    margin: 16px 0;
+
+    color: var(--color);
+}
+
+.userAvatarInMessage {
+    width: 30px;
+    height: 30px;
+}
+
+.userMessage {
+
+}

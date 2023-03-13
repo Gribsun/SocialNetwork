@@ -102,7 +102,7 @@ export const Users: FC = () => {
                         followed={user.followed}
                         uniqueUrlName={user.uniqueUrlName}
                     />
-                ) : null}
+                ) : <div>No users found</div>}
             </div>
         </div>
     )

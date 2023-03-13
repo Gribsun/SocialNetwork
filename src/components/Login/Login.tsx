@@ -9,7 +9,7 @@ import {logIn} from '../../init/actions/authAction';
 import {regExpEmail} from '../../helpers/regExpHeplers';
 
 // styles
-import style from './LoginPage.module.css';
+import style from './Login.module.css';
 
 type FormValuesType = {
     email: string,

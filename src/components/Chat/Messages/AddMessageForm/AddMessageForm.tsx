@@ -1,11 +1,13 @@
 // core
 import React, {FC, useState, ChangeEvent} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
+import {useAppDispatch} from '../../../../hooks/redux-hooks';
+
+// other
+import {sendMessage} from '../../../../init/actions/chatAction';
 
 // styles
 import style from './AddMessageForm.module.css';
-import {addMessage} from "../../../init/actions/messagesAction";
-import {useAppDispatch} from "../../../hooks/redux-hooks";
 
 type FormValuesType = {
     messageText: string,
@@ -14,29 +16,33 @@ type FormValuesType = {
 
 export const AddMessageForm: FC = () => {
     const dispatch = useAppDispatch();
-    const [text, setText] = useState('');
+    const [inputValue, setInputValue] = useState('');
+    const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending');
     const {register, handleSubmit, formState: {errors}} = useForm<FormValuesType>();
 
     const handlerInputText = (event: ChangeEvent<HTMLInputElement>) => {
-        setText(event.target.value);
+        setInputValue(event.target.value);
     }
 
     const onSubmit: SubmitHandler<FormValuesType> = data => {
         const {messageText} = data;
-        dispatch(addMessage(messageText));
-        setText('');
+        if (!messageText) {
+            return
+        }
+        dispatch(sendMessage(messageText));
+        setInputValue('');
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={style.messageInputWindow}>
             <input {...register("messageText", {required: true})}
                    aria-invalid={errors.message ? "true" : "false"}
-                   value={text}
+                   value={inputValue}
                    onChange={handlerInputText}
                    className={style.inputForm}
             />
             {errors.message?.type === 'required' && <p role="alert">!!!</p>}
-            <input type="submit" className={style.buttonSubmit} />
+            <input disabled={false} type="submit" className={style.buttonSubmit} />
         </form>
     )
 }

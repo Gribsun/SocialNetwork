@@ -1,25 +1,25 @@
 // core
 import React, {FC, Suspense, useEffect} from 'react';
 import {Routes, Route, Navigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from './hooks/redux-hooks';
 
 // components
+import {LoginPage} from './components/pages/Login/LoginPage';
 import {Preloader} from './components/common/Preloader/Preloader';
 import {Header} from './components/Header/Header';
 import {Navbar} from './components/Navbar/Navbar';
-import {LoginPage} from './components/LoginPage/LoginPage';
 
 // other
 import {checkLogin} from './init/actions/authAction';
 import {initializedSuccess} from './init/actions/appAction';
-import {useAppDispatch, useAppSelector} from './hooks/redux-hooks';
 
 // styles
 import style from './App.module.css';
 
 // components lazy loading
-const UsersPage = React.lazy(() => import('./components/UsersPage/UsersPage'));
-const ProfilePage = React.lazy(() => import('./components/ProfilePage/ProfilePage'));
-const MessagesPage = React.lazy(() => import('./components/MessagesPage/MessagesPage'));
+const UsersPage = React.lazy(() => import('./components/pages/Users/UsersPage'));
+const ProfilePage = React.lazy(() => import('./components/pages/Profile/ProfilePage'));
+const ChatPage = React.lazy(() => import('./components/pages/Chat/ChatPage'));
 
 export const App: FC = () => {
     const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ export const App: FC = () => {
     return (
         <>
             {!initialized
-                ? <Preloader />
+                ? <Preloader/>
                 : <div id='applicationBlock' className={style.appWrapper} aria-disabled={true}>
                     <Header/>
                     <div className={style.appWrapperContent}>
@@ -45,7 +45,7 @@ export const App: FC = () => {
                             <Suspense fallback={<div>Loading...</div>}>
                                 <Routes>
                                     <Route path='/profile/:id?' element={<ProfilePage/>}/>
-                                    <Route path='/messages' element={<MessagesPage/>}/>
+                                    <Route path='/chat' element={<ChatPage/>}/>
                                     <Route path='/users' element={<UsersPage/>}/>
                                     <Route path='/login' element={<LoginPage/>}/>
                                     <Route path='/' element={<Navigate to='/profile'/>}/>
