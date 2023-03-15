@@ -15,20 +15,21 @@ import {
     getPageSizeSelect,
     getTotalCountSelect, getUserSelect
 } from '../../init/selectors/users-selectors';
+import {conversionParameterToURL, initialURLCheckAndGenerationUserList} from '../../helpers/usersSearchHelpers';
 
 // types
-import {IFilter} from './types/UsersPageTypes';
+import {ActualFilterDataType, IFilter, IParsed} from './types/UsersPageTypes';
 
 // styles
 import style from './Users.module.css';
-import {conversionParameterToURL, initialURLCheckAndGenerationUserList} from "../../helpers/usersSearchHelpers";
 
 export const Users: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams(location.search);
-    const parsedSearchParams = Object.fromEntries([...searchParams]);
+    //@ts-ignore
+    const parsedSearchParams: IParsed = Object.fromEntries([...searchParams]);
 
     const users = useAppSelector(getUserSelect);
     const pageSize = useAppSelector(getPageSizeSelect);
@@ -36,12 +37,12 @@ export const Users: FC = () => {
     const totalCount = useAppSelector(getTotalCountSelect);
     const filter = useAppSelector(getFilterUsersSelect);
 
+    const actualFilterData: ActualFilterDataType = initialURLCheckAndGenerationUserList(parsedSearchParams, filter);
+
     useEffect(() => {
-        // @ts-ignore
-        const {actualTerm, actualFriend, actualCurrentPage} = initialURLCheckAndGenerationUserList(parsedSearchParams, filter);
+        const {actualCurrentPage, actualTerm, actualFriend} = actualFilterData;
         dispatch(setFilter(actualTerm, actualFriend));
         dispatch(getUsers(pageSize, actualCurrentPage, actualTerm, actualFriend));
-        // @ts-ignore
         const result = conversionParameterToURL(parsedSearchParams);
         navigate(`/users?${result}`);
     }, []);
@@ -52,7 +53,6 @@ export const Users: FC = () => {
             friend: filter.friend,
             page: currentPage,
         };
-        //@ts-ignore
         const result = conversionParameterToURL(parsed);
         navigate(`/users?${result}`);
     }, [filter, currentPage]);
@@ -82,8 +82,7 @@ export const Users: FC = () => {
                 >
                     previous
                 </button>
-                {/*@ts-ignore*/}
-                <UsersSearchForm onFilterChanged={onFilterChanged} parsedSearchParams={parsedSearchParams}/>
+                <UsersSearchForm onFilterChanged={onFilterChanged} actualFilterData={actualFilterData}/>
                 <button
                     disabled={currentPage === totalCount || users.length < 5}
                     onClick={() => onPageChanged(currentPage + 1)}
@@ -93,16 +92,17 @@ export const Users: FC = () => {
                 </button>
             </div>
             <div className={style.usersList}>
-                {users.length ? users.map(user =>
-                    <User
-                        key={user.id}
-                        id={user.id}
-                        name={user.name}
-                        photos={user.photos}
-                        followed={user.followed}
-                        uniqueUrlName={user.uniqueUrlName}
-                    />
-                ) : <div>No users found</div>}
+                {users.length
+                    ? users.map(user =>
+                        <User
+                            key={user.id}
+                            id={user.id}
+                            name={user.name}
+                            photos={user.photos}
+                            followed={user.followed}
+                            uniqueUrlName={user.uniqueUrlName}
+                        />)
+                    : <div>No users found</div>}
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 import {IProfileContacts, IProfileUser} from '../init/types/profileTypes';
 
 export const getProfileDataItems = (profileData: IProfileUser) => {
-    const profileDataForRender: Array<Record<string, IProfileUser[keyof IProfileUser]>> = [];
+    const profileDataForRender: Array<Record<string, string | boolean | number>> = [];
 
     Object.keys(profileData).forEach(key => {
         const data = profileData[key as keyof IProfileUser];

@@ -1,7 +1,7 @@
 // core
 import React, {FC} from 'react';
 import {NavLink} from 'react-router-dom';
-import {useAppSelector} from "../../hooks/redux-hooks";
+import {useAppSelector} from '../../hooks/redux-hooks';
 
 // components
 import {UserPanel} from './UserPanel/UserPanel';
@@ -15,6 +15,7 @@ import style from './Header.module.css';
 
 export const Header: FC = () => {
     const {theme, setTheme} = useTheme();
+
     const {login} = useAppSelector(state => state.auth);
     const handleChangeTheme = () => {
         theme === 'dark' ? setTheme('light') : setTheme('dark');

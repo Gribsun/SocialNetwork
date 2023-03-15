@@ -10,10 +10,10 @@ import {ProfileDataForm} from './ProfileDataForm/ProfileDataForm';
 import style from './ProfileInfo.module.css';
 
 // types
-import {IProfileContacts, IProfileUser, UserPhotosType} from '../../../init/types/profileTypes';
+import {IProfileContacts, UserPhotosType} from '../../../init/types/profileTypes';
 
 type ProfileInfoProps = {
-    profileDataList: Array<Record<string, IProfileUser[keyof IProfileUser]>>,
+    profileDataList: Array<Record<string, string | boolean | number>>,
     filterContactList: Array<Record<string, IProfileContacts[keyof IProfileContacts]>>,
     fullContactList: Array<Record<string, IProfileContacts[keyof IProfileContacts]>>,
     photos: UserPhotosType

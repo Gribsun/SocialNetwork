@@ -1,5 +1,5 @@
 import {RootState} from '../index';
 
-export const getPosts = (state: RootState) => {
+export const getPostsSelect = (state: RootState) => {
     return state.postsCollection.posts;
 }

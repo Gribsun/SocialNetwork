@@ -1,8 +1,8 @@
 import {AppDispatch} from '../index';
 import {chatApi} from '../../api';
-import {ChatActionTypes, ChatMessageType} from '../types/chatTypes';
+import {ChatActionTypes, ChatMessageAPIType, StatusType} from '../types/chatTypes';
 
-let _newMessageHandlerCreator: ((messages: ChatMessageType[]) => void) | null = null;
+let _newMessageHandlerCreator: ((messages: ChatMessageAPIType[]) => void) | null = null;
 const newMessageHandlerCreator = (dispatch: AppDispatch) => {
     if (_newMessageHandlerCreator === null) {
         _newMessageHandlerCreator = (messages) => {
@@ -15,10 +15,24 @@ const newMessageHandlerCreator = (dispatch: AppDispatch) => {
     return _newMessageHandlerCreator
 }
 
+let _statusChangedHandler: ((status: StatusType) => void) | null = null;
+const statusChangedHandlerCreator = (dispatch: AppDispatch) => {
+    if (_statusChangedHandler === null) {
+        _statusChangedHandler = (status) => {
+            dispatch({
+                type: ChatActionTypes.SET_STATUS,
+                payload: {status},
+            })
+        }
+    }
+    return _statusChangedHandler
+}
+
 export const startMessagesListening = () => async (dispatch: AppDispatch) => {
     try {
         chatApi.start();
-        chatApi.subscribe(newMessageHandlerCreator(dispatch));
+        chatApi.subscribe('messages-received', newMessageHandlerCreator(dispatch));
+        chatApi.subscribe('status-changed', statusChangedHandlerCreator(dispatch));
     } catch (err) {
         console.log(err);
     }
@@ -26,14 +40,15 @@ export const startMessagesListening = () => async (dispatch: AppDispatch) => {
 
 export const stopMessagesListening = () => async (dispatch: AppDispatch) => {
     try {
-        chatApi.unsubscribe(newMessageHandlerCreator(dispatch));
+        chatApi.unsubscribe('messages-received', newMessageHandlerCreator(dispatch));
+        chatApi.unsubscribe('status-changed', statusChangedHandlerCreator(dispatch));
         chatApi.stop();
     } catch (err) {
         console.log(err);
     }
 };
 
-export const sendMessage = (message: string) => async (dispatch: AppDispatch) => {
+export const sendMessage = (message: string) => async () => {
     try {
         chatApi.sendMessage(message);
     } catch (err) {

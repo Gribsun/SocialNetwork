@@ -9,7 +9,7 @@ import clear from '../../../public/clear.png'
 import style from './UsersSearchForm.module.css';
 
 // types
-import {IFilter, IParsed} from '../types/UsersPageTypes';
+import {ActualFilterDataType, IFilter} from '../types/UsersPageTypes';
 import {changingFilterFriendsTypes} from '../../../helpers/usersSearchHelpers';
 
 type FormValuesType = {
@@ -20,14 +20,18 @@ type FormValuesType = {
 };
 
 type UsersSearchFormType = {
-    parsedSearchParams: IParsed,
+    actualFilterData: ActualFilterDataType,
     onFilterChanged: (pageNumber: number, filter: IFilter) => void
 }
 
-export const UsersSearchForm: FC<UsersSearchFormType> = ({parsedSearchParams, onFilterChanged}) => {
-    const {register, handleSubmit, formState: {errors}, reset} = useForm<FormValuesType>();
-    const [termInForm, setTermInForm] = useState(parsedSearchParams.term);
-    const [defaultValueForSelect, setDefaultValueForSelect] = useState(parsedSearchParams.friend);
+export const UsersSearchForm: FC<UsersSearchFormType> = ({actualFilterData, onFilterChanged}) => {
+    const {register, handleSubmit, reset} = useForm<FormValuesType>({
+        defaultValues: {
+            term: actualFilterData.actualTerm,
+            friend: String(actualFilterData.actualFriend),
+        }
+    });
+    const [defaultValueForSelect, setDefaultValueForSelect] = useState(actualFilterData.actualFriend);
 
     const onSubmit: SubmitHandler<FormValuesType> = (filter) => {
         const editedFilter = changingFilterFriendsTypes(filter);
@@ -37,7 +41,6 @@ export const UsersSearchForm: FC<UsersSearchFormType> = ({parsedSearchParams, on
     const clearInputHandler = () => {
         reset(formValues => {
             onFilterChanged(1, {term: '', friend: null});
-            setTermInForm('');
             setDefaultValueForSelect(null);
             return ({
                 ...formValues,
@@ -51,22 +54,17 @@ export const UsersSearchForm: FC<UsersSearchFormType> = ({parsedSearchParams, on
         <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
             <div className={style.inputFormWitchClear}>
                 <input {...register('term', {required: false})}
-                       aria-invalid={errors.search ? 'true' : 'false'}
                        placeholder='Search'
-                       value={termInForm ? termInForm : ''}
-                       onChange={(event) => setTermInForm(event.target.value)}
                        className={style.inputForm}
                 />
-                <button onClick={clearInputHandler}
-                >
-                    <img src={clear} alt='#' className={style.buttonClearImg}/>
-                </button>
+                <img src={clear} alt='#' onClick={clearInputHandler} className={style.buttonClearImg}/>
             </div>
             <div className={style.selectAndSubmitWrapper}>
                 <select
                     {...register('friend')}
                     defaultValue={String(defaultValueForSelect)}
-                    className={style.selectFriend}>
+                    className={style.selectFriend}
+                >
                     <option value='null' className={style.optionFriend}>
                         All users
                     </option>
@@ -77,7 +75,11 @@ export const UsersSearchForm: FC<UsersSearchFormType> = ({parsedSearchParams, on
                         Unsubscribed users
                     </option>
                 </select>
-                <input type='submit' value='search' className={style.buttonSubmit}/>
+                <input
+                    type='submit'
+                    value='Search'
+                    className={style.buttonSubmit}
+                />
             </div>
 
         </form>

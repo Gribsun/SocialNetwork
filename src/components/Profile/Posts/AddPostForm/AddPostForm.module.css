@@ -12,7 +12,7 @@
     padding: 18px;
     font-size: 24px;
     background-color: var(--input-background-color);
-    color: var(--input-text-color);
+    color: var(--color);
     border-radius: 8px;
 }
 
@@ -32,4 +32,12 @@
 .buttonSubmit:hover {
     background-color: var(--button-color);
     transition: 0.2s;
+}
+
+.buttonSubmit:disabled {
+    opacity: 40%;
+}
+
+.buttonSubmit:hover:disabled {
+    background-color: var(--background-color-content);
 }

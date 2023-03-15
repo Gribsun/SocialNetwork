@@ -10,7 +10,7 @@ type MessagePropsType = {
     photo: string,
 }
 
-export const Message: FC<MessagePropsType> = ({userName, message, photo}) => {
+const Message: FC<MessagePropsType> = ({userName, message, photo}) => {
     return (
         <div className={style.messageWrapper}>
             <div className={style.userInfoInMessage}>
@@ -25,3 +25,5 @@ export const Message: FC<MessagePropsType> = ({userName, message, photo}) => {
         </div>
     )
 };
+
+export default React.memo(Message);

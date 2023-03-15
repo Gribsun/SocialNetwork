@@ -1,8 +1,10 @@
 import {AnyAction} from 'redux';
-import {ChatActionTypes, ChatMessageType} from '../types/chatTypes';
+import {ChatActionTypes, ChatMessageAPIType, ChatMessageType, StatusType} from '../types/chatTypes';
+import {v1} from 'uuid';
 
 const initialState = {
     messages: [] as ChatMessageType[],
+    status: 'pending' as StatusType,
 }
 
 export const chatReducer = (
@@ -13,7 +15,14 @@ export const chatReducer = (
         case ChatActionTypes.SET_MESSAGES: {
             return {
                 ...state,
-                messages: [...state.messages, ...action.payload.messages],
+                messages: [...state.messages, ...action.payload.messages
+                    .map((m: ChatMessageAPIType): ChatMessageType => ({...m, id: v1()}))],
+            }
+        }
+        case ChatActionTypes.SET_STATUS: {
+            return {
+                ...state,
+                status: action.payload.status,
             }
         }
         default:

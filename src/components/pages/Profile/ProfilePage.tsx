@@ -12,7 +12,7 @@ import {getIsFetchingSelect} from '../../../init/selectors/profile-selectors';
 import {getIsAuthSelect} from '../../../init/selectors/auth-selectors';
 import {checkLogin} from '../../../init/actions/authAction';
 
-const ProfilePage: FC = () => {
+export const ProfilePage: FC = () => {
     const dispatch = useAppDispatch();
 
     const isFetching = useAppSelector(getIsFetchingSelect);
@@ -30,4 +30,3 @@ const ProfilePage: FC = () => {
             : <Profile/>}
     </>)
 }
-export default ProfilePage;

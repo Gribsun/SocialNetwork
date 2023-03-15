@@ -1,4 +1,4 @@
-import {IFilter, IParsed} from '../components/Users/types/UsersPageTypes';
+import {ActualFilterDataType, IFilter, IParsed} from '../components/Users/types/UsersPageTypes';
 
 type FormValuesType = {
     term: string,
@@ -15,7 +15,6 @@ type EditedFilterType = {
 };
 
 export const changingFilterFriendsTypes = (filter: FormValuesType): EditedFilterType => {
-
     const editedFilter: EditedFilterType = {
         term: filter.term,
         search: filter.search,
@@ -33,11 +32,10 @@ export const changingFilterFriendsTypes = (filter: FormValuesType): EditedFilter
     return editedFilter;
 }
 
-export const initialURLCheckAndGenerationUserList = (parsed: IParsed, filter: IFilter) => {
-    const actualCurrentPage = parsed.page ? Number(parsed.page) : 1;
-    const actualTerm = parsed.term ? parsed.term : filter.term;
-    const actualFriend = parsed.friend ? parsed.friend : filter.friend;
-
+export const initialURLCheckAndGenerationUserList = (parsedSearchParams: IParsed, filter: IFilter): ActualFilterDataType => {
+    const actualCurrentPage = parsedSearchParams.page ? Number(parsedSearchParams.page) : 1;
+    const actualTerm = parsedSearchParams.term ? parsedSearchParams.term : filter.term;
+    const actualFriend = parsedSearchParams.friend ? parsedSearchParams.friend : filter.friend;
     return {actualCurrentPage, actualTerm, actualFriend}
 }
 

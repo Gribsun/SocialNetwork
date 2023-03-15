@@ -34,7 +34,8 @@ html, body {
 }
 
 input:-webkit-autofill {
-    -webkit-box-shadow: inset 0 0 0 50px var(--background-color-content);
+    -webkit-box-shadow: inset 0 0 0 50px var(--input-background-color);
+    -webkit-text-decoration-color: var(--color);
     -webkit-text-fill-color: var(--color);
 }
 

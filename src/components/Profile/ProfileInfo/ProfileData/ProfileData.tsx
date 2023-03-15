@@ -8,17 +8,17 @@ import {AboutTheUser} from './AboutTheUser/AboutTheUser';
 
 // other
 import {updateUserStatus} from '../../../../init/actions/profileAction';
+import {getIsMyProfileSelect} from '../../../../init/selectors/profile-selectors';
 import icon from '../../../../public/settingsIcon.png';
 
 // styles
 import style from './ProfileData.module.css';
 
 // types
-import {IProfileContacts, IProfileUser} from '../../../../init/types/profileTypes';
-import {getIsMyProfileSelect} from "../../../../init/selectors/profile-selectors";
+import {IProfileContacts} from '../../../../init/types/profileTypes';
 
 type ProfileDataType = {
-    profileDataList: Array<Record<string, IProfileUser[keyof IProfileUser]>>,
+    profileDataList: Array<Record<string, string | boolean | number>>,
     filterContactList: Array<Record<string, IProfileContacts[keyof IProfileContacts]>>,
     status: string,
     activateEditMode: () => void,
@@ -72,10 +72,9 @@ export const ProfileData: FC<ProfileDataType> = (
                     </li>
                 }
                 <li className={style.li}>
-                    {profileDataList && profileDataList.map(data =>
+                    {profileDataList.length && profileDataList.map(data =>
                         <AboutTheUser
                             key={Math.ceil(Math.random() * 1000)}
-                            //@ts-ignore
                             data={data}
                         />)}
                 </li>

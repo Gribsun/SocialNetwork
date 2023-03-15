@@ -1,7 +1,7 @@
 // core
-import React, {FC, useState, ChangeEvent} from 'react';
+import React, {FC, useEffect} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {useAppDispatch} from '../../../../hooks/redux-hooks';
+import {useAppDispatch, useAppSelector} from '../../../../hooks/redux-hooks';
 
 // other
 import {sendMessage} from '../../../../init/actions/chatAction';
@@ -16,33 +16,44 @@ type FormValuesType = {
 
 export const AddMessageForm: FC = () => {
     const dispatch = useAppDispatch();
-    const [inputValue, setInputValue] = useState('');
-    const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending');
-    const {register, handleSubmit, formState: {errors}} = useForm<FormValuesType>();
+    const status = useAppSelector(state => state.chat.status);
+    const {
+        register,
+        handleSubmit,
+        formState,
+        formState: {isDirty, isValid},
+        reset,
+        setFocus,
+    } = useForm<FormValuesType>({defaultValues: {messageText: ''}});
 
-    const handlerInputText = (event: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value);
-    }
+    useEffect(() => {
+        setFocus('messageText')
+    }, [setFocus]);
 
-    const onSubmit: SubmitHandler<FormValuesType> = data => {
+    const onSubmit: SubmitHandler<FormValuesType> = (data) => {
         const {messageText} = data;
-        if (!messageText) {
-            return
-        }
         dispatch(sendMessage(messageText));
-        setInputValue('');
     };
+
+    useEffect(() => {
+        if (formState.isSubmitSuccessful) {
+            reset({messageText: ''});
+        }
+    }, [formState, reset]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={style.messageInputWindow}>
-            <input {...register("messageText", {required: true})}
-                   aria-invalid={errors.message ? "true" : "false"}
-                   value={inputValue}
-                   onChange={handlerInputText}
+            <input {...register('messageText', {required: true})}
                    className={style.inputForm}
+                   placeholder='Write a message...'
             />
-            {errors.message?.type === 'required' && <p role="alert">!!!</p>}
-            <input disabled={false} type="submit" className={style.buttonSubmit} />
+            <button
+                disabled={status === 'pending' || !isDirty || !isValid}
+                type='submit'
+                className={style.buttonSubmit}
+            >
+                Send
+            </button>
         </form>
     )
 }

@@ -73,9 +73,9 @@ export const updateUserStatus = (status: string) =>
         }
     };
 
-export const updatePhoto = (file: string) => async (dispatch: AppDispatch) => {
+export const updatePhoto = (file: File) => async (dispatch: AppDispatch) => {
     try {
-        const data = await profileAPI.savePhoto(file);
+        const data = await profileAPI.savePhoto(String(file));
         if (data.resultCode === 0) {
             const {photos} = data.data;
             dispatch({

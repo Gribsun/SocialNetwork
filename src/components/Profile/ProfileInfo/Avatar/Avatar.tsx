@@ -26,8 +26,7 @@ export const Avatar: FC<AvatarPropsType> = (
     const {large} = photos;
 
     const onMainPhotoSelected = (event: ChangeEvent<HTMLInputElement>) => {
-        //@ts-ignore
-        dispatch(updatePhoto(event.target.files[0]));
+        event.target.files && dispatch(updatePhoto(event.target.files[0]))
     }
 
     return (

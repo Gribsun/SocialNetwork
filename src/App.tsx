@@ -8,6 +8,7 @@ import {LoginPage} from './components/pages/Login/LoginPage';
 import {Preloader} from './components/common/Preloader/Preloader';
 import {Header} from './components/Header/Header';
 import {Navbar} from './components/Navbar/Navbar';
+import {ProfilePage} from './components/pages/Profile/ProfilePage';
 
 // other
 import {checkLogin} from './init/actions/authAction';
@@ -18,7 +19,6 @@ import style from './App.module.css';
 
 // components lazy loading
 const UsersPage = React.lazy(() => import('./components/pages/Users/UsersPage'));
-const ProfilePage = React.lazy(() => import('./components/pages/Profile/ProfilePage'));
 const ChatPage = React.lazy(() => import('./components/pages/Chat/ChatPage'));
 
 export const App: FC = () => {

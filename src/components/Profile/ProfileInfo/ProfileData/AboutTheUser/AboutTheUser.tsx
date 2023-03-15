@@ -8,13 +8,12 @@ import style from './AboutTheUser.module.css';
 import {IProfileUser} from '../../../../../init/types/profileTypes';
 
 type AboutTheUserType = {
-    data: IProfileUser,
+    data: Record<string, string | boolean | number>,
 }
 
 export const AboutTheUser: FC<AboutTheUserType> = ({data}) => {
-    const objKey = Object.keys(data)[0];
-    // @ts-ignore
-    const objValue = data[objKey];
+    const objKey: IProfileUser[keyof IProfileUser] = Object.keys(data)[0];
+    const objValue = Object.values(data)[0];
 
     return (
         <>

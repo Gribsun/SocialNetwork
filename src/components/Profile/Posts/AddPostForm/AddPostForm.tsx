@@ -1,43 +1,51 @@
 // core
-import React, {FC, useState, ChangeEvent} from 'react';
+import React, {FC, useEffect} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
+import {useAppDispatch} from '../../../../hooks/redux-hooks';
+
+// other
+import {addPost} from '../../../../init/actions/postsAction';
 
 // styles
 import style from './AddPostForm.module.css';
-
-type AddPostFormProps = {
-    addPost: (text: string) => void,
-}
 
 type FormValuesType = {
     post: string,
     message: string,
 };
 
-export const AddPostForm: FC<AddPostFormProps> = ({addPost}) => {
-    const [textareaValue, setTextareaValue] = useState('');
-    const {register, handleSubmit, formState: {errors}} = useForm<FormValuesType>();
-
-    const textareaHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setTextareaValue(event.target.value);
-    }
+export const AddPostForm: FC = () => {
+    const dispatch = useAppDispatch();
+    const {
+        register,
+        handleSubmit,
+        formState,
+        formState: {isDirty, isValid},
+        reset
+    } = useForm<FormValuesType>({defaultValues: {post: ''}});
 
     const onSubmit: SubmitHandler<FormValuesType> = (values) => {
         const {post} = values;
-        addPost(post);
-        setTextareaValue('');
+        dispatch(addPost(post));
     }
+
+    useEffect(() => {
+        if (formState.isSubmitSuccessful) {
+            reset({post: ''});
+        }
+    }, [formState, reset]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={style.postForm}>
             <textarea {...register('post', {required: true})}
-                      aria-invalid={errors.post ? 'true' : 'false'}
-                      value={textareaValue}
-                      onChange={textareaHandler}
                       className={style.textareaForm}
+                      placeholder={'What\'s new with you?'}
             />
-            {errors.post?.type === 'required' && <p role='alert'>Enter the post</p>}
-            <input type='submit' value='Add post' className={style.buttonSubmit}/>
+            <input
+                disabled={!isDirty || !isValid}
+                type='submit'
+                value='Add post'
+                className={style.buttonSubmit}/>
         </form>
     )
 }

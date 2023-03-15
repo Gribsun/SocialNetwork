@@ -1,44 +1,23 @@
 // core
-import React, {FC, useState, useEffect, useMemo} from 'react';
-import {useParams} from 'react-router-dom';
+import React, {FC, useState, useMemo} from 'react';
+import {useAppSelector} from '../../hooks/redux-hooks';
 
 // components
-import {PostsContainer} from './Posts/PostsContainer';
+import Posts from './Posts/Posts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo'
 
 // Other
-import mainPhoto from '../../public/big-serious-sam-history.jpg';
+import {useCheckProfile} from '../../hooks/useCheckProfile';
+import {getProfileDataSelect} from '../../init/selectors/profile-selectors';
 import {getActualContacts, getFullContactList, getProfileDataItems} from '../../helpers/profileDataHelpers';
+import mainPhoto from '../../public/big-serious-sam-history.jpg';
 
 // styles
 import style from './Profile.module.css';
 
-// types
-import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import {checkIsMyProfile, getUserProfile, getUserStatus} from '../../init/actions/profileAction';
-import {getProfileDataSelect} from '../../init/selectors/profile-selectors';
-
 export const Profile: FC = () => {
-    const dispatch = useAppDispatch();
-
-    const userId = useParams().id!;
-    const myUserId = useAppSelector(state => state.auth.userId);
-
-    useEffect(() => {
-        dispatch(checkIsMyProfile(!userId));
-        if (!userId || Number(userId) === myUserId) {
-            const id = myUserId;
-            dispatch(getUserStatus(id));
-            dispatch(getUserProfile(id));
-        } else {
-            const id = Number(userId);
-            dispatch(getUserStatus(id));
-            dispatch(getUserProfile(id));
-        }
-    }, [dispatch, userId, myUserId]);
-
     const profileData = useAppSelector(getProfileDataSelect);
-
+    useCheckProfile();
     const {photos, status} = profileData;
 
     const [editMode, setEditMode] = useState(false);
@@ -75,6 +54,6 @@ export const Profile: FC = () => {
                 inputValue={inputValue}
                 setInputValue={setInputValue}
             />
-            {!editMode && <PostsContainer/>}
+            {!editMode && <Posts/>}
         </div>)
 };
