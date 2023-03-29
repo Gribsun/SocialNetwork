@@ -5,6 +5,9 @@ import {ResultCodeEnum, ResultCodeForCaptchaEnum} from '../../api/apiTypes';
 
 export const checkLogin = () => async (dispatch: AppDispatch) => {
     const data = await authAPI.me();
+    if (localStorage.getItem('isAuth') === null) {
+        return dispatch(logOut());
+    }
     if (data.resultCode === ResultCodeEnum.Success) {
         const {id, email, login} = data.data;
         dispatch({

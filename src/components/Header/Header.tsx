@@ -20,6 +20,7 @@ export const Header: FC = () => {
     const handleChangeTheme = () => {
         theme === 'dark' ? setTheme('light') : setTheme('dark');
     }
+
     return (
         <div id='applicationPage' className={style.headerWrapper}>
             <div className={style.header}>

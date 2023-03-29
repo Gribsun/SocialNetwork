@@ -11,7 +11,7 @@ import {getIsAuthSelect} from '../../../init/selectors/auth-selectors';
 
 export const LoginPage: FC = () => {
     const isAuth = useAppSelector(getIsAuthSelect);
-    if (isAuth) return <Navigate to={'/profile'}/>;
+    if (isAuth && localStorage.getItem('isAuth')) return <Navigate to={'/profile'}/>;
 
     return (
         <Login />
